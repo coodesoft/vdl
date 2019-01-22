@@ -12,6 +12,7 @@
 
 get_header(); ?>
 
+
 <div class="wrap">
 
 	<?php if ( have_posts() ) : ?>
