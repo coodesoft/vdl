@@ -25,21 +25,10 @@ get_header(); ?>
 			$current_catId = get_query_var('cat');
 			$cat = get_category($current_catId);
 			// chequea si la categoría es subcategoria
-		 	$current_catId = ($cat->category_parent == 0) ? $current_catId : $cat->category_parent;
+		 //	$current_catId = ($cat->category_parent == 0) ? $current_catId : $cat->category_parent;
+		}
+		the_skirmisher_tags($current_catId);
 	?>
-	<ul class="skirmisher-nav-links">
-		 <?php
-			 $childcats = get_categories('child_of=' . $current_catId . '&hide_empty=0');
-			 foreach ($childcats as $childcat) { ?>
-			 	<li>
-					<a href="<?php echo get_category_link($childcat->cat_ID)?>" title="<?php echo $childcat->category_description ?>">
-			    	<?php echo $childcat->cat_name ?>
-					</a>
-				</li>
-		 <?php } ?>
-	</ul>
-
-	<?php  } ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 
@@ -48,16 +37,7 @@ get_header(); ?>
 
 			<div class="row">
 			<?php
-				$args = array(
-			  	'post_type'  => 'post',
-			  	'order'      => 'DESC',
-			  	'orderby'    => 'post_modified',
-					'category_name'   => get_the_category()[0]->name,
-					'posts_per_page' => 10,
-				);
-				$posts_query = new WP_Query( $args );
-
-				while ( $posts_query->have_posts() ) : $posts_query->the_post();
+				while ( have_posts() ) : the_post();
 					get_template_part( 'template-parts/post', 'preview' );
 				endwhile;
 			?>
