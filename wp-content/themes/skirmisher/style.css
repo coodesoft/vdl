@@ -13,16 +13,64 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
+#page, body{
+	margin-top: 0 !important;
+}
+
+body:before{
+	height: 0!important;
+}
+
 #masthead{
   padding-bottom: 0;
+  padding-top: 0;
+}
+
+.menu-menu-principal-container{
+	text-align: center;
+}
+
+#menu-menu-principal{
+	display: inline-block;
+}
+
+#menu-menu-principal li{
+	margin-top: 5px;
+	padding-left: 10px;
+	padding-right: 10px;
+	border-right: 1px solid #666 !important;
+
+}
+
+#menu-menu-principal li:last-child{
+	border-right: 0px solid transparent !important;
+}
+
+#menu-menu-principal li a{
+	text-transform:uppercase;
+	color: #ccc !important;
+	text-decoration: none;
+}
+
+#menu-menu-principal li.current-menu-item a{
+	text-shadow: 0px 0px transparent;
+	font-weight: normal;
+	color: #f68708 !important;
+}
+
+#menu-menu-principal li a:hover{
+	color: #f68708 !important;
+	text-decoration: none;
 }
 
 .menu-categorias-container{
   border-bottom: 2px solid orange;
 }
 
-.news-nav{
-
+#site-header-menu{
+	width: 100%;
+	background: #333;
+	margin-top: 0;
 }
 
 .skirmisher-nav-links{
@@ -35,8 +83,34 @@ Use it to make something cool, have fun, and share what you've learned with othe
 }
 
 .skirmisher-nav-links li a{
-  font-family: 'Muli', sans-serif;
+	color: black;
+	text-decoration: none;
+	font-family: 'Muli', sans-serif;
 }
+
+.skirmisher-nav-links li a:hover{
+	text-decoracion: none;
+	color: #2e739c;
+}
+
+.current-category-ancestor a,
+.current-menu-item a{
+	color: #2e739c !important;
+  text-shadow: 1px 1px #ddd;
+
+}
+
+.subcategory-item a:hover{
+	color: #f68708 !important;
+}
+
+.current-subcategory-item a{
+	color: #f68708 !important;
+	text-shadow: 1px 1px #ddd;
+
+}
+
+
 
 .skirmisher-card{
   margin-top: 5px;
@@ -59,7 +133,7 @@ Use it to make something cool, have fun, and share what you've learned with othe
 }
 
 .skirmisher-card .card-body.no-audio-attached{
-  padding-bottom: 43px;
+  padding-bottom: 42px;
 }
 
 .skirmisher-audio{
@@ -71,4 +145,31 @@ Use it to make something cool, have fun, and share what you've learned with othe
 .post-link:hover{
   color: #212529;
   text-decoration: none;
+ 
 }
+
+
+#skirmisher-slider{
+	margin-top: 30px;
+	margin-bottom:50px;
+}
+
+#skirmisher-slider .carousel-indicators{
+	bottom: -50px;
+}
+
+#skirmisher-slider .carousel-indicators li{
+	height: 20px;
+	width: 20px;
+	border: 1px solid #666;
+	background: #e6e6e6;
+	border-radius: 100%;
+	margin-left: 5px;
+	margin-right: 5px;
+}
+
+#skirmisher-slider .carousel-indicators li.active{
+	background: #2e739c;
+}
+
+

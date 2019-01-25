@@ -24,22 +24,11 @@ get_header(); ?>
 		if ( is_category() ) {
 			$current_catId = get_query_var('cat');
 			$cat = get_category($current_catId);
-			// chequea si la categoría es subcategoria
+			// chequea si la categoria es subcategoria
 		 	$current_catId = ($cat->category_parent == 0) ? $current_catId : $cat->category_parent;
-	?>
-	<ul class="skirmisher-nav-links">
-		 <?php
-			 $childcats = get_categories('child_of=' . $current_catId . '&hide_empty=0');
-			 foreach ($childcats as $childcat) { ?>
-			 	<li>
-					<a href="<?php echo get_category_link($childcat->cat_ID)?>" title="<?php echo $childcat->category_description ?>">
-			    	<?php echo $childcat->cat_name ?>
-					</a>
-				</li>
-		 <?php } ?>
-	</ul>
 
-	<?php  } ?>
+			the_skirmisher_subcategories($current_catId, $cat);
+		} ?>
 	<div id="primary" class="content-area">
 		<main id="main" class="site-main" role="main">
 

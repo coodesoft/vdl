@@ -11,22 +11,11 @@ function excerpt_length($lenght){
   return $length + 3;
 }
 
-function the_skirmisher_tags($category = null){
-  $posttags = get_tags();
-
-  if ($posttags) {
 
 
-  ?>
-
-    <ul class="skirmisher-nav-links">
-      <?php foreach($posttags as $tag) { ?>
-         <li>
-           <a href="<?php echo $category ? get_tag_link($tag->term_id). '?category='.$category : get_tag_link($tag->term_id) ?>" title="<?php echo $tag->name ?>"><?php echo $tag->name ?></a>
-         </li>
-       <?php } ?>
-   </ul>
-   <?php }
+function skirmisher_attachment_img($post_id){
+	 $imagen = wp_get_attachment_image_src( get_post_thumbnail_id($post_id), 'full');
+     return ($imagen[0] != null) ? $imagen[0] : wp_upload_dir('2019/01')['url'] . '/logo-attachment.png';
 }
 
 ?>
