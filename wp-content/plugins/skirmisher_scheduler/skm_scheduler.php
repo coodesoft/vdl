@@ -18,30 +18,33 @@ if ( !function_exists( 'add_action' ) ) {
 	echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
 	exit;
 }
-
-require_once 'admin/skm_scheduler_admin.php';
-
+/*
+ * ACTIVACIÓN - Se añaden las depenencias ---------------------------
+ */
 
 wp_register_script('jquery_js', plugins_url('/js/jquery-3.2.1.min.js', __FILE__), [], false, true );
 wp_register_script('bootstrap_js', plugins_url('/js/bootstrap.min.js', __FILE__), ['jquery_js'], false, true );
 wp_register_script('popper_js', plugins_url('/js/popper.min.js', __FILE__), [], false, true );
-wp_register_script('fontawesome-all', plugins_url('/js/fontawesome-all.js', __FILE__), [], false, true );
+//wp_register_script('fontawesome-all', plugins_url('/js/fontawesome-all.js', __FILE__), [], false, true );
 
-add_action('admin_enqueue_scripts', 'add_scripts_admin' );
-function add_scripts_admin(){
+add_action('admin_enqueue_scripts', 'add_scripts_deps' );
+function add_scripts_deps(){
     wp_enqueue_script( 'jquery_js');
     wp_enqueue_script( 'popper_js' );
     wp_enqueue_script( 'bootstrap_js');
-    wp_enqueue_script( 'fontawesome-all' );
+  //  wp_enqueue_script( 'fontawesome-all' );
 }
 
-add_action('admin_enqueue_scripts', 'add_stylesheet_admin' );
-function add_stylesheet_admin($hook){
+add_action('admin_enqueue_scripts', 'add_stylesheet_deps' );
+function add_stylesheet_deps($hook){
 	if($hook != 'toplevel_page_global_skirmisher_scheduler')
   	return;
 	wp_enqueue_style( 'bootstrap_css',  plugins_url('/css/bootstrap.min.css', __FILE__) );
 }
 
+/*
+ * ACTIVACIÓN - Se crea la tabla de programación de eventos y se añade el tipo de dato ---------------------------
+ */
 
 function skm_schedule_create_table(){
 
@@ -124,3 +127,11 @@ function skirmisher_event_type() {
     register_post_type( 'events', $args );
 
 }
+
+
+/*
+ * ACTIVACIÓN - se incluyen las áreas ---------------------------
+ */
+
+
+require_once 'admin/skm_scheduler_admin.php';
