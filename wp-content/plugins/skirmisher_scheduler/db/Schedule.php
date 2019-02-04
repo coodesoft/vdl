@@ -32,4 +32,27 @@ class Schedule{
     $queryStr = 'SELECT * FROM '. $tablename .' ORDER BY id ASC';
     return $wpdb->get_results($queryStr, ARRAY_A);
   }
+
+  static function getByDay($name){
+    global $wpdb;
+    $tablename = $wpdb->prefix . self::TABLE;
+    $postTable = $wpdb->prefix . 'posts';
+
+    $cols = [
+      'mon' => 'monday',
+      'tue' => 'tuesday',
+      'wed' => 'wednesday',
+      'thu' => 'thursday',
+      'fri' => 'friday',
+      'sat' => 'saturady',
+      'sun' => 'sunday',
+    ];
+
+
+    $queryStr = 'SELECT * FROM '. $tablename;
+    $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
+    $queryStr .= ' WHERE '.$tablename.'.'.$cols[$name].'=1';
+    $query = $wpdb->prepare($queryStr, array($name));
+    return $wpdb->get_results($query, ARRAY_A);
+  }
 }
