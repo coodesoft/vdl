@@ -19,7 +19,7 @@ class Schedule{
       'saturday'  => $value['saturday'],
       'timetable' => $value['timetable']
     ];
-
+	
     $result = $wpdb->insert($tablename, $toSave);
     return $result>0 ? $wpdb->insert_id : 0;
   }
