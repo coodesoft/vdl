@@ -1,0 +1,24 @@
+
+
+#skirmisherScheduler li{
+  display: inline-block;
+  list-style-type: none;
+  padding: 5px 20px;
+  cursor:pointer;
+  color: #ccc;
+}
+
+#skirmisherScheduler li:hover{
+  background: #2e739c;
+  
+}
+
+#skirmisherScheduler ul{
+  background: #333;
+}
+
+
+div.schedule-header{
+  background: #f68708;
+  color: white;
+}

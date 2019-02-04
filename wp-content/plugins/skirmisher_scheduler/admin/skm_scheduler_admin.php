@@ -5,14 +5,13 @@ function skm_schedule_admin_menu(){
 	add_menu_page('Skirmisher Scheduler', 'Skirmisher Scheduler', 'manage_options', 'global_skirmisher_scheduler', 'global_skirmisher_admin');
 }
 
-wp_register_script('skm_scheduler', plugins_url('/js/skm_scheduler.js', __FILE__), ['jquery_js'], false, true );
+wp_register_script('skm_scheduler_admin', plugins_url('/js/skm_scheduler.js', __FILE__), ['jquery_js'], false, true );
 add_action('admin_enqueue_scripts', 'add_scripts_admin' );
 function add_scripts_admin(){
-    wp_enqueue_script( 'skm_scheduler');
+    wp_enqueue_script( 'skm_scheduler_admin' );
 }
 
 
-require_once 'db/Schedule.php';
 
 function global_skirmisher_admin(){
   $args = array( 'post_type' => 'events' );
@@ -35,7 +34,7 @@ function global_skirmisher_admin(){
 			    <div class="col-md-4">
 			      <div class="form-group">
 			        <label for="eventsSelect">Eventos: </label>
-			        <select class="form-control" id="eventsSelect" name="eventSelect">
+			        <select class="form-control" id="eventsSelect" name="eventSelect" required>
 			          <option value="0" disabled selected>Seleccione un evento</option>
 			          <?php foreach ($events as $key => $event): ?>
 			            <option value="<?php echo $event->ID?>"><?php echo $event->post_title ?></option>
@@ -85,7 +84,6 @@ function global_skirmisher_admin(){
 					<table class="table table-striped">
 					  <thead>
 					    <tr>
-					      <th scope="col">id</th>
 					      <th scope="col">Programa</th>
 					      <th scope="col">Domingo</th>
 					      <th scope="col">Lunes</th>
@@ -95,6 +93,7 @@ function global_skirmisher_admin(){
 								<th scope="col">Viernes</th>
 								<th scope="col">Sábado</th>
 								<th scope="col">Horario</th>
+								<th scope="col">Acciones</th>
 					    </tr>
 					  </thead>
 					  <tbody>
@@ -106,8 +105,7 @@ function global_skirmisher_admin(){
 									    	'numberposts' => -1
 
 								]); ?>
-								<tr>
-						      <th scope="row"><?php echo $event['id'] ?></th>
+								<tr data-id="<?php echo $event['id'] ?>">
 						      <td><?php echo $eventDesc[0]->post_title?></td>
 									<td><?php echo $event['sunday'] ?></td>
 									<td><?php echo $event['monday']?></td>
@@ -117,6 +115,10 @@ function global_skirmisher_admin(){
 									<td><?php echo $event['friday']?></td>
 									<td><?php echo $event['saturday']?></td>
 									<td><?php echo $event['timetable']?></td>
+									<td>
+										<i class="fas fa-edit skirmisher-edit"></i>
+										<i class="fas fa-trash-alt skirmisher-delete"></i>
+									</td>
 						    </tr>
 							<?php endforeach; ?>
 					  </tbody>
