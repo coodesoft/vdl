@@ -19,11 +19,16 @@ class Schedule{
       'saturday'  => $value['saturday'],
       'timetable' => $value['timetable']
     ];
-	
+
     $result = $wpdb->insert($tablename, $toSave);
     return $result>0 ? $wpdb->insert_id : 0;
   }
 
+  static function delete($id){
+    global $wpdb;
+    $tablename = $wpdb->prefix . self::TABLE;
+    return $wpdb->delete( $tablename, ['id' => $id]);
+  }
 
   static function getAll(){
     global $wpdb;
@@ -54,5 +59,28 @@ class Schedule{
     $queryStr .= ' WHERE '.$tablename.'.'.$cols[$name].'=1';
     $query = $wpdb->prepare($queryStr, array($name));
     return $wpdb->get_results($query, ARRAY_A);
+  }
+
+  static function getById($id){
+    global $wpdb;
+    $tablename = $wpdb->prefix . self::TABLE;
+    $postTable = $wpdb->prefix . 'posts';
+
+
+    $queryStr = 'SELECT * FROM '. $tablename;
+    $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
+    $queryStr .= ' WHERE '.$tablename.'.id=%d';
+    $query = $wpdb->prepare($queryStr, array($id));
+    return $wpdb->get_results($query, ARRAY_A);
+  }
+
+  static function getEventById($event_id){
+    return get_posts([
+           'post_type' => 'events',
+           'post_status' => 'publish',
+           'ID' => $event_id,
+           'numberposts' => -1
+
+         ]);
   }
 }

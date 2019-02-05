@@ -11,7 +11,12 @@ function add_scripts_admin(){
     wp_enqueue_script( 'skm_scheduler_admin' );
 }
 
-
+add_action('admin_enqueue_scripts', 'add_stylesheet_admin' );
+function add_stylesheet_admin($hook){
+	if($hook != 'toplevel_page_global_skirmisher_scheduler')
+  	return;
+	wp_enqueue_style( 'skm_scheduler',  plugins_url('/css/skm_scheduler.css', __FILE__) );
+}
 
 function global_skirmisher_admin(){
   $args = array( 'post_type' => 'events' );
@@ -24,7 +29,7 @@ function global_skirmisher_admin(){
 	]);
   ?>
 
-	<div id="smkSchedulerAdminArea" class="container-fluid">
+	<div id="skmSchedulerAdminArea" class="container-fluid">
 			<div class="skm_scheduler_header">
 			    <h4>Smkirmisher Scheduler Admin Área</h4>
 			</div>
@@ -79,6 +84,9 @@ function global_skirmisher_admin(){
 			</form>
 
 			<div class="row">
+				<div class="response alert d-none" role="alert"></div>
+			</div>
+			<div class="row">
 				<?php $events = Schedule::getAll(); ?>
 				<?php if (count($events)) { ?>
 					<table class="table table-striped">
@@ -98,15 +106,9 @@ function global_skirmisher_admin(){
 					  </thead>
 					  <tbody>
 							<?php foreach ($events as $key => $event): ?>
-								<?php $eventDesc = get_posts([
-									    	'post_type' => 'events',
-									    	'post_status' => 'publish',
-												'ID' => $event->event_id,
-									    	'numberposts' => -1
-
-								]); ?>
+								<?php $eventDesc = Schedule::getEventById($event->event_id); ?>
 								<tr data-id="<?php echo $event['id'] ?>">
-						      <td><?php echo $eventDesc[0]->post_title?></td>
+									<td><?php echo $eventDesc[0]->post_title?></td>
 									<td><?php echo $event['sunday'] ?></td>
 									<td><?php echo $event['monday']?></td>
 									<td><?php echo $event['tuesday']?></td>
@@ -115,11 +117,8 @@ function global_skirmisher_admin(){
 									<td><?php echo $event['friday']?></td>
 									<td><?php echo $event['saturday']?></td>
 									<td><?php echo $event['timetable']?></td>
-									<td>
-										<i class="fas fa-edit skirmisher-edit"></i>
-										<i class="fas fa-trash-alt skirmisher-delete"></i>
-									</td>
-						    </tr>
+									<td><i class="fas fa-trash-alt skirmisher-delete"></i></td>
+								</tr>
 							<?php endforeach; ?>
 					  </tbody>
 					</table>
@@ -129,6 +128,9 @@ function global_skirmisher_admin(){
 			</div>
 	</div>
 <?php }
+
+
+
 
 add_action( 'wp_ajax_skm_add_event', 'skirmisher_add_event' );
 function skirmisher_add_event(){
@@ -149,8 +151,27 @@ function skirmisher_add_event(){
 		$toSave[$value] = 1;
 	}
 
-	$result = Schedule::add($toSave);
+	$schedule_id = Schedule::add($toSave);
 
-	echo json_encode(['status' => $result, 'data' => $toSave]);
+	if ($schedule_id){
+ 	  $schedule = Schedule::getById($schedule_id);
+		$toSave['id'] = $schedule_id;
+		$toSave['title'] = $schedule['post_title'];
+		echo json_encode(['result' => true, 'schedule' => $toSave]);
+	} else
+		echo json_encode(['result' => false, 'msj' => 'Ops, hay algo mal que no anda bien. Se produjo un error al guardar la programación' ]);
+	wp_die();
+}
+
+add_action( 'wp_ajax_skm_delete_event', 'skirmisher_delete_event' );
+function skirmisher_delete_event(){
+	$params = array();
+	parse_str($_POST, $params);
+
+	$result = Schedule::delete($_POST['to_delete']);
+	if ($result)
+		echo json_encode(['result' => $result, 'msj' => 'Se produjo un error inesperado el eliminar el evento. Consulte con el administrador!']);
+	else
+		echo json_encode(['result' => $result, 't_delete' => $_POST['to_delete']] );
 	wp_die();
 }
