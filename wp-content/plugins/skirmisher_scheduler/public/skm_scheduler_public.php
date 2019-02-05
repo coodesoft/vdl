@@ -12,7 +12,7 @@ function skirmisher_public_html(){
     $schedule = Schedule::getByDay('sun');
 ?>
   <div id="skirmisherScheduler">
-    <ul>
+    <ul class="d-inline-block text-center">
       <li class="schedule-selection schedule-active" data-day="sun">Domingo</li>
       <li class="schedule-selection" data-day="mon">Lunes</li>
       <li class="schedule-selection" data-day="tue">Martes</li>
@@ -25,9 +25,9 @@ function skirmisher_public_html(){
     <div id="shedulerContainer" class="row">
       <?php foreach ($schedule as $key => $data): ?>
         <div class="schedule-container col-12">
-          <div class="schedule-header">
-            <div class="schedule-head"><?php echo $data['timetable']?></div>
-            <div class="schedule-head"><?php echo strtoupper($data['post_title'])?></div>
+          <div class="schedule-header d-inline-block">
+            <div class="schedule-head d-inline-block"><?php echo $data['timetable']?></div>
+            <div class="schedule-head d-inline-block"><?php echo strtoupper($data['post_title'])?></div>
           </div>
           <div class="schedule-body">
             <?php echo $data['post_content'] ?>
@@ -56,9 +56,9 @@ function skm_load_schedule(){
 
   foreach ($schedule as $key => $data): ?>
     <div class="schedule-container col-12">
-      <div class="schedule-header">
-        <div class="schedule-head"><?php echo $data['timetable']?></div>
-        <div class="schedule-head"><?php echo strtoupper($data['post_title'])?></div>
+      <div class="schedule-header d-inline-block">
+        <div class="schedule-head d-inline-block"><?php echo $data['timetable']?></div>
+        <div class="schedule-head d-inline-block"><?php echo strtoupper($data['post_title'])?></div>
       </div>
       <div class="schedule-body">
         <?php echo $data['post_content'] ?>

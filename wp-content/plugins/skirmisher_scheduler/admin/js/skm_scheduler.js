@@ -2,13 +2,13 @@
 let scheduleRow = function(schedule){
   let row = '<tr data-id="'+schedule['id']+'">';
   row += '<td>'+schedule['title']+'</td>'
-  row += '<td>'+schedule['sunday']+'</td>'
-  row += '<td>'+schedule['monday']+'</td>'
-  row += '<td>'+schedule['tuesday']+'</td>'
-  row += '<td>'+schedule['wednesday']+'</td>'
-  row += '<td>'+schedule['thursday']+'</td>'
-  row += '<td>'+schedule['friday']+'</td>'
-  row += '<td>'+schedule['saturday']+'</td>'
+  row += '<td>'+(schedule['sunday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['monday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['tuesday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['wednesday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['thursday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['friday'] ? "Sí" : "-" )+'</td>'
+  row += '<td>'+(schedule['saturday'] ? "Sí" : "-" )+'</td>'
   row += '<td>'+schedule['timetable']+'</td>'
   row += '<td><i class="fas fa-trash-alt skirmisher-delete"></i></td>';
   row += '</tr>';
@@ -29,16 +29,21 @@ $(function(){
 
     $.post(ajaxurl, data, function(response){
       response = JSON.parse(response);
+      
+      //reseteo el select y los checkbox
+      $('#eventsForm input[type=checkbox]').prop('checked',false);
+      $('#emptyOption').prop('selected', true);
+
       if (response['result']){
         let row = scheduleRow(response['schedule']);
-        $('#smkSchedulerAdminArea table tbody').append(row);
+        $('#skmSchedulerAdminArea table tbody').prepend(row);
       } else{
-        $('#smkSchedulerAdminArea .response').html(response['msj']);
-        $('#smkSchedulerAdminArea .response').addClass('alert-danger');
-        $('#smkSchedulerAdminArea .response').removeClass('d-none');
+        $('#skmSchedulerAdminArea .response').html(response['msj']);
+        $('#skmSchedulerAdminArea .response').addClass('alert-danger');
+        $('#skmSchedulerAdminArea .response').removeClass('d-none');
         setTimeout(function(){
-          $('#smkSchedulerAdminArea .response').removeClass('alert-danger');
-          $('#smkSchedulerAdminArea .response').addClass('d-none');
+          $('#skmSchedulerAdminArea .response').removeClass('alert-danger');
+          $('#skmSchedulerAdminArea .response').addClass('d-none');
         }, 1000);
       }
     });

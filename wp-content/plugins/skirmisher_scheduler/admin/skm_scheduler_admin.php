@@ -40,7 +40,7 @@ function global_skirmisher_admin(){
 			      <div class="form-group">
 			        <label for="eventsSelect">Eventos: </label>
 			        <select class="form-control" id="eventsSelect" name="eventSelect" required>
-			          <option value="0" disabled selected>Seleccione un evento</option>
+			          <option id="emptyOption" value="0" disabled selected>Seleccione un evento</option>
 			          <?php foreach ($events as $key => $event): ?>
 			            <option value="<?php echo $event->ID?>"><?php echo $event->post_title ?></option>
 			          <?php endforeach; ?>
@@ -106,16 +106,16 @@ function global_skirmisher_admin(){
 					  </thead>
 					  <tbody>
 							<?php foreach ($events as $key => $event): ?>
-								<?php $eventDesc = Schedule::getEventById($event->event_id); ?>
+								<?php $eventDesc = Schedule::getEventById($event['event_id']); ?>
 								<tr data-id="<?php echo $event['id'] ?>">
-									<td><?php echo $eventDesc[0]->post_title?></td>
-									<td><?php echo $event['sunday'] ?></td>
-									<td><?php echo $event['monday']?></td>
-									<td><?php echo $event['tuesday']?></td>
-									<td><?php echo $event['wednesday']?></td>
-									<td><?php echo $event['thursday']?></td>
-									<td><?php echo $event['friday']?></td>
-									<td><?php echo $event['saturday']?></td>
+									<td><?php echo $eventDesc['post_title']?></td>
+									<td><?php echo ($event['sunday'] ? 'Sí' : '-')?></td>
+									<td><?php echo ($event['monday'] ? 'Sí' : '-') ?></td>
+									<td><?php echo ($event['tuesday'] ? 'Sí' : '-') ?></td>
+									<td><?php echo ($event['wednesday'] ? 'Sí' : '-') ?></td>
+									<td><?php echo ($event['thursday'] ? 'Sí' : '-') ?></td>
+									<td><?php echo ($event['friday'] ? 'Sí' : '-') ?></td>
+									<td><?php echo ($event['saturday'] ? 'Sí' : '-') ?></td>
 									<td><?php echo $event['timetable']?></td>
 									<td><i class="fas fa-trash-alt skirmisher-delete"></i></td>
 								</tr>
@@ -155,7 +155,7 @@ function skirmisher_add_event(){
 	if ($schedule_id){
  	  $schedule = Schedule::getById($schedule_id);
 		$toSave['id'] = $schedule_id;
-		$toSave['title'] = $schedule['post_title'];
+		$toSave['title'] = $schedule[0]['post_title'];
 		echo json_encode(['result' => true, 'schedule' => $toSave]);
 	} else
 		echo json_encode(['result' => false, 'msj' => 'Ops, hay algo mal que no anda bien. Se produjo un error al guardar la programación' ]);

@@ -75,12 +75,6 @@ class Schedule{
   }
 
   static function getEventById($event_id){
-    return get_posts([
-           'post_type' => 'events',
-           'post_status' => 'publish',
-           'ID' => $event_id,
-           'numberposts' => -1
-
-         ]);
+    return get_post($event_id, ARRAY_A);
   }
 }

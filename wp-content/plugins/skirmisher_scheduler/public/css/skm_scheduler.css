@@ -16,10 +16,30 @@
 
 #skirmisherScheduler ul{
   background: #333;
+  text-transform: uppercase;
+  font-size: 14px;
+  width: 100%;
 }
 
 
-div.schedule-header{
+.schedule-header{
   background: #f68708;
   color: white;
+
+}
+
+.schedule-head{
+  padding: 2px 5px;
+  font-size: 13px;
+}
+
+.schedule-head:last-child{
+  border-left: 1px solid white;
+}
+
+.schedule-body{
+  background: whitesmoke;
+  padding: 10px;
+  border: 1px solid #eee;
+  margin-bottom: 20px;
 }

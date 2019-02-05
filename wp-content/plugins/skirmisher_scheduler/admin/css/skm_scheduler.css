@@ -2,3 +2,7 @@
 .skirmisher-delete{
   cursor: pointer;
 }
+
+#addEventSchedule{
+  margin-bottom: 20px;
+}
