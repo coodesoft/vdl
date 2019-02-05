@@ -8,10 +8,11 @@
   color: #ccc;
 }
 
-#skirmisherScheduler li:hover{
+#skirmisherScheduler li:hover,
+#skirmisherScheduler li.schedule-active{
   background: #2e739c;
-  
 }
+
 
 #skirmisherScheduler ul{
   background: #333;

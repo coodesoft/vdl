@@ -18,6 +18,10 @@ if ( !function_exists( 'add_action' ) ) {
 	echo 'Hi there!  I\'m just a plugin, not much I can do when called directly.';
 	exit;
 }
+
+
+define( 'SKIRMISHER_BASE_PATH' , plugin_dir_path( __FILE__ ) );
+
 /*
  * ACTIVACIÓN - Se añaden las depenencias ---------------------------
  */
@@ -41,6 +45,14 @@ function add_stylesheet_deps($hook){
   	return;
 	wp_enqueue_style( 'bootstrap_css',  plugins_url('/css/bootstrap.min.css', __FILE__) );
 }
+
+add_action('wp_head', 'skirmisher_ajaxurl');
+function skirmisher_ajaxurl() {
+    echo '<script type="text/javascript">
+           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
+         </script>';
+}
+
 
 /*
  * ACTIVACIÓN - Se crea la tabla de programación de eventos y se añade el tipo de dato ---------------------------

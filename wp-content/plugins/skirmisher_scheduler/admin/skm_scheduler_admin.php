@@ -64,13 +64,13 @@ function global_skirmisher_admin(){
 							<div class="col-md-6 col-12">
 						  	<label for="horaInicio" class="col-12 col-form-label">Hora de Inicio</label>
 						  	<div class="col-12">
-						    	<input class="form-control" type="time" value="13:00:00" id="horaInicio" name="horaInicio">
+						    	<input class="form-control" type="time" value="13:00" id="horaInicio" name="horaInicio">
 						  	</div>
 							</div>
 							<div class="col-md-6 col-12">
 								<label for="horaFin" class="col-12 col-form-label">Hora de Fin</label>
 							  <div class="col-12">
-							    <input class="form-control" type="time" value="14:00:00" id="horaFin" name="horaFin">
+							    <input class="form-control" type="time" value="14:00" id="horaFin" name="horaFin">
 							  </div>
 							</div>
 						</div>
@@ -138,7 +138,6 @@ function skirmisher_add_event(){
 	parse_str($_POST['events'], $params);
 	$toSave['event_id'] = $params['eventSelect'];
 	$toSave['timetable'] = $params['horaInicio'].' - '.$params['horaFin'];
-
 	$toSave['sunday'] = 0;
 	$toSave['monday'] = 0;
 	$toSave['tuesday'] = 0;
@@ -169,7 +168,7 @@ function skirmisher_delete_event(){
 	parse_str($_POST, $params);
 
 	$result = Schedule::delete($_POST['to_delete']);
-	if ($result)
+	if (!$result)
 		echo json_encode(['result' => $result, 'msj' => 'Se produjo un error inesperado el eliminar el evento. Consulte con el administrador!']);
 	else
 		echo json_encode(['result' => $result, 't_delete' => $_POST['to_delete']] );
