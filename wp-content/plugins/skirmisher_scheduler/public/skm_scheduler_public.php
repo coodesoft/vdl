@@ -40,6 +40,7 @@ function skirmisher_public_html(){
 <?php }
 
 add_action( 'wp_ajax_skm_load_schedule', 'skm_load_schedule' );
+add_action( 'wp_ajax_nopriv_skm_load_schedule', 'skm_load_schedule' );
 function skm_load_schedule(){
   $day = $_POST['schedule_id'];
 

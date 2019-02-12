@@ -75,13 +75,31 @@ function skm_schedule_create_table(){
             thursday TINYINT(1) NOT NULL,
             friday TINYINT(1) NOT NULL,
             saturday TINYINT(1) NOT NULL,
-            timetable varchar(100) NOT NULL,
+            begin_time varchar(10) NOT NULL,
+						end_time varchar(10) NOT NULL,
+						radio int(10) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
 
         require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
         dbDelta( $sql );
     }
+
+		$table_name = $wpdb->prefix . 'skm_radios';
+    if( $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) {
+        $charset_collate = $wpdb->get_charset_collate();
+
+        $sql = "CREATE TABLE $table_name (
+            id bigint(20) NOT NULL AUTO_INCREMENT,
+						radio varchar(100) NOT NULL,
+            PRIMARY KEY (id)
+        ) $charset_collate;";
+
+        require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+        dbDelta( $sql );
+    }
+
+
 }
 
 register_activation_hook( __FILE__, 'skm_schedule_install' );
@@ -146,5 +164,6 @@ function skirmisher_event_type() {
  */
 
 require_once 'db/Schedule.php';
+require_once 'db/Radios.php';
 require_once 'admin/skm_scheduler_admin.php';
 require_once 'public/skm_scheduler_public.php';

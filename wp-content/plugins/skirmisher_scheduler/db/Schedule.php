@@ -4,6 +4,18 @@ class Schedule{
 
   const TABLE = 'skm_schedule';
 
+  static function getCols(){
+    return [
+      'mon' => 'monday',
+      'tue' => 'tuesday',
+      'wed' => 'wednesday',
+      'thu' => 'thursday',
+      'fri' => 'friday',
+      'sat' => 'saturady',
+      'sun' => 'sunday',
+    ];
+  }
+
   static function add($value){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
@@ -17,7 +29,9 @@ class Schedule{
       'thursday'  => $value['thursday'],
       'friday'    => $value['friday'],
       'saturday'  => $value['saturday'],
-      'timetable' => $value['timetable']
+      'begin_time' => $value['begin_time'],
+      'end_time' => $value['end_time'],
+      'radio' => $value['radio']
     ];
 
     $result = $wpdb->insert($tablename, $toSave);
@@ -43,16 +57,7 @@ class Schedule{
     $tablename = $wpdb->prefix . self::TABLE;
     $postTable = $wpdb->prefix . 'posts';
 
-    $cols = [
-      'mon' => 'monday',
-      'tue' => 'tuesday',
-      'wed' => 'wednesday',
-      'thu' => 'thursday',
-      'fri' => 'friday',
-      'sat' => 'saturady',
-      'sun' => 'sunday',
-    ];
-
+    $cols = self::getCols();
 
     $queryStr = 'SELECT * FROM '. $tablename;
     $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
@@ -74,7 +79,27 @@ class Schedule{
     return $wpdb->get_results($query, ARRAY_A);
   }
 
+  static function getByRadioAndDay($radio, $day){
+    global $wpdb;
+    $tablename = $wpdb->prefix . self::TABLE;
+    $postTable = $wpdb->prefix . 'posts';
+    $radiosTable = $wpdb->prefix . Radios::TABLE;
+
+    $cols = self::getCols();
+
+    $queryStr  = 'SELECT * FROM '. $tablename;
+    $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio='.$radiosTable.'.id';
+    $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
+    $queryStr .= ' WHERE '.$tablename.'.id=%d AND '.$tablename.'.'.$cols[$day].'=1';
+
+    $query = $wpdb->prepare($queryStr, array($id));
+
+    return $wpdb->get_results($query, ARRAY_A);
+  }
+
+
   static function getEventById($event_id){
     return get_post($event_id, ARRAY_A);
   }
+
 }

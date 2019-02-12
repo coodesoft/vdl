@@ -15,6 +15,36 @@ let scheduleRow = function(schedule){
   return row;
 }
 
+let radioRow = function (radio){
+  let row = '<tr data-radio="'+radio['id']+'">';
+  row += '<td class="radio-'+radio['id']+'">'+radio['radio']+'</td>';
+  row += '<td><i class="edit-radio fas fa-edit"></i>';
+  row += '<i class="delete-radio fas fa-trash-alt"></i></td>';
+  return row;
+}
+
+let showMessage = function(container, message){
+  $(container+' .response').html(message);
+  $(container+' .response').addClass('alert-danger');
+  $(container+' .response').removeClass('d-none');
+  setTimeout(function(){
+    $(container+' .response').removeClass('alert-danger');
+    $(container+' .response').addClass('d-none');
+  }, 1000);
+}
+
+let processResult = function(result, data, container, callback){
+  if (result){
+    let row = callback(data);
+
+    if ($('#emptyTable').length)
+      $(container+' table tbody').html(row);
+    else
+      $(container+' table tbody').append(row);
+  } else{
+    showMessage(container, response['message']);
+  }
+}
 
 $(function(){
 
@@ -29,23 +59,12 @@ $(function(){
 
     $.post(ajaxurl, data, function(response){
       response = JSON.parse(response);
-      
+
       //reseteo el select y los checkbox
       $('#eventsForm input[type=checkbox]').prop('checked',false);
       $('#emptyOption').prop('selected', true);
 
-      if (response['result']){
-        let row = scheduleRow(response['schedule']);
-        $('#skmSchedulerAdminArea table tbody').prepend(row);
-      } else{
-        $('#skmSchedulerAdminArea .response').html(response['msj']);
-        $('#skmSchedulerAdminArea .response').addClass('alert-danger');
-        $('#skmSchedulerAdminArea .response').removeClass('d-none');
-        setTimeout(function(){
-          $('#skmSchedulerAdminArea .response').removeClass('alert-danger');
-          $('#skmSchedulerAdminArea .response').addClass('d-none');
-        }, 1000);
-      }
+      processResult(response['result'], response['schedule'], '#skmSchedulerAdminArea', schedleRow);
     });
   })
 
@@ -73,4 +92,96 @@ $(function(){
     });
   });
 
+
+
+  $('#skmRadiosAdminArea').off().on('submit', '#newRadioForm', function(e){
+    e.stopPropagation();
+    e.preventDefault();
+
+    let isNewRadio = $('#radioId').val()==0;
+    let data = {
+      'data' : $(this).serialize(),
+      'action': isNewRadio ? 'skm_add_radio' : 'skm_edit_radio',
+    };
+
+    $.post(ajaxurl, data, function(response){
+      response = JSON.parse(response);
+
+      $('#radioInput').val('');
+      $('#radioId').val('0');
+      $('#cancelEdit').remove();
+      $('#submitButton').html('Cargar');
+
+      if (isNewRadio)
+        processResult(response['result'], response['radio'], '#skmRadiosAdminArea', radioRow);
+      else{
+        if (response['result']){
+          let id = response['obj']['id'];
+          let radio = response['obj']['radio'];
+          $('#skmRadiosAdminArea table tr.radio-'+id+' td:first-child').html(radio);
+
+        } else{
+          showMessage('#skmRadiosAdminArea', response['msg']);
+        }
+      }
+    });
+
+  });
+
+  $('#skmRadiosAdminArea').on('click', '#cancelEdit', function(){
+    $('#radioInput').val('');
+    $('#radioId').val('0');
+    $(this).remove();
+    $('#submitButton').html('Cargar');
+  });
+
+  $('#skmRadiosAdminArea').on('click', '.edit-radio', function(){
+
+    let cancelButton = '<button id="cancelEdit" type="button" class="btn btn-dark">Cancelar</button>';
+    if ( !$('#cancelEdit').length){
+      $('#buttonArea').append(cancelButton);
+      $('#submitButton').html('Editar');
+    }
+
+    let id = $(this).closest('tr').attr('data-radio');
+
+    let data = {
+        data: id,
+        action: 'skm_edit_radio',
+    };
+
+    $.get(ajaxurl, data, function(response){
+      response = JSON.parse(response);
+
+      if (response['result']){
+        $('#radioInput').val(response['obj']['radio']);
+        $('#radioId').val(response['obj']['id']);
+
+        $('#radioInput').attr('data-id', response['obj']['radioId']);
+      }else{
+        showMessage('#skmRadiosAdminArea', response['msg']);
+      }
+
+    });
+
+  });
+
+  $('#skmRadiosAdminArea').on('click', '.delete-radio', function(){
+
+    let data = {
+      data: $(this).closest('tr').attr('data-radio'),
+      action: 'skm_delete_radio',
+    };
+
+
+    $.post(ajaxurl, data, function(response){
+      response = JSON.parse(response);
+
+      if (response['result'])
+        $('tr.radio-'+response['radio_id']).remove();
+      else
+          showMessage('#skmRadiosAdminArea', response['msg']);
+    });
+
+  });
 });
