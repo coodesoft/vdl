@@ -2,7 +2,7 @@
 
 function skm_radios_tab(){ ?>
 
-  <div id="skmRadiosAdminArea" class="container-fluid">
+  <div id="skmRadiosAdminArea" class="skm-container container-fluid">
     <div class="row">
       <div class="response alert d-none" role="alert"></div>
     </div>

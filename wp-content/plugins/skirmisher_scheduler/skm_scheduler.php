@@ -66,7 +66,7 @@ function skm_schedule_create_table(){
         $charset_collate = $wpdb->get_charset_collate();
 
         $sql = "CREATE TABLE $table_name (
-            id bigint(20) NOT NULL AUTO_INCREMENT,
+            schedule_id bigint(20) NOT NULL AUTO_INCREMENT,
             event_id int(10) NOT NULL,
             sunday TINYINT(1) NOT NULL,
             monday TINYINT(1) NOT NULL,
@@ -77,7 +77,7 @@ function skm_schedule_create_table(){
             saturday TINYINT(1) NOT NULL,
             begin_time varchar(10) NOT NULL,
 						end_time varchar(10) NOT NULL,
-						radio int(10) NOT NULL,
+						radio_id int(10) NOT NULL,
             PRIMARY KEY (id)
         ) $charset_collate;";
 

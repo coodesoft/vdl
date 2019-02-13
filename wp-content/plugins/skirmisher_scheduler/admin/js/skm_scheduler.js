@@ -10,7 +10,8 @@ let scheduleRow = function(schedule){
   row += '<td>'+(schedule['friday'] ? "Sí" : "-" )+'</td>'
   row += '<td>'+(schedule['saturday'] ? "Sí" : "-" )+'</td>'
   row += '<td>'+schedule['timetable']+'</td>'
-  row += '<td><i class="fas fa-trash-alt skirmisher-delete"></i></td>';
+  row += '<td><i class="skirmisher-edit fas fa-edit"></i>';
+  row += '<i class="fas fa-trash-alt skirmisher-delete"></i></td>';
   row += '</tr>';
   return row;
 }
@@ -33,7 +34,7 @@ let showMessage = function(container, message){
   }, 1000);
 }
 
-let processResult = function(result, data, container, callback){
+let processResult = function(result, data, errorMsg, container, callback){
   if (result){
     let row = callback(data);
 
@@ -42,13 +43,32 @@ let processResult = function(result, data, container, callback){
     else
       $(container+' table tbody').append(row);
   } else{
-    showMessage(container, response['message']);
+    showMessage(container, errorMsg);
   }
 }
+
+let cleanScheduleForm = function(){
+//  $('#radioSelect').val("");
+  $('#radioSelect').prop("selectedIndex",0);
+
+//  $('#eventsSelect').val("");
+  $('#eventsSelect').prop("selectedIndex",0);
+
+  $('#eventsSelect').attr('disabled', false);
+
+  $('#selectDays input').attr('checked', false);
+  $('#horaInicio').val('13:00');
+  $('#horaFin').val('14:00');
+}
+
 
 $(function(){
 
   //$.post(ajaxurl, data, function(data){});
+
+  /*
+   * FUNCIONES DE LA TAB DE LA PROGRAMACIÓN------------------------------------
+   */
 
   $('#skmSchedulerAdminArea').off().on('click', '#addEventSchedule', function(){
     let form = $(this).closest('#eventsForm');
@@ -64,11 +84,11 @@ $(function(){
       $('#eventsForm input[type=checkbox]').prop('checked',false);
       $('#emptyOption').prop('selected', true);
 
-      processResult(response['result'], response['schedule'], '#skmSchedulerAdminArea', schedleRow);
+      processResult(response['result'], response['schedule'], response['msg'], '#skmSchedulerAdminArea', scheduleRow);
     });
-  })
+  });
 
-  $('#skmSchedulerAdminArea').on('click', '.skirmisher-delete', function(){
+  $('#skmSchedulerAdminArea').on('click', '.skm-delete', function(){
     let self = $(this)
     let data = {
       'to_delete' : self.closest('tr').attr('data-id'),
@@ -92,7 +112,63 @@ $(function(){
     });
   });
 
+  $('#skmSchedulerAdminArea').on('click', '.skm-edit', function(){
+      $(this).addClass('d-none').removeClass('d-inline');
+      $(this).siblings('.skm-delete').addClass('d-none').removeClass('d-inline');
 
+      $(this).siblings('.skm-cancel-edit').removeClass('d-none').addClass('d-inline');
+      $(this).siblings('.skm-confirm-edit').removeClass('d-none').addClass('d-inline');
+
+      let $row = $(this).closest('tr');
+
+      $row.find('input').attr('disabled', false);
+      $row.find('td.data-text').addClass('d-none');
+      $row.find('td.data-select').removeClass('d-none');
+
+  });
+
+  $('#skmSchedulerAdminArea').on('click', '.skm-cancel-edit', function(){
+    $(this).addClass('d-none').removeClass('d-inline');
+    $(this).siblings('.skm-delete').addClass('d-inline').removeClass('d-none');
+
+    $(this).siblings('.skm-edit').removeClass('d-none').addClass('d-inline');
+    $(this).siblings('.skm-confirm-edit').removeClass('d-inline').addClass('d-none');
+
+    let $row = $(this).closest('tr');
+
+    $row.find('input').attr('disabled', true);
+    $row.find('td.data-select').addClass('d-none');
+    $row.find('td.data-text').removeClass('d-none');
+
+  });
+
+  $('#skmSchedulerAdminArea').on('click', '.skm-confirm-edit', function(){
+    let data = {
+      data: $(this).closest('form').serialize(),
+      action: 'skm_confirm_edit_event',
+    }
+    console.log($(this).closest('form'));
+
+    $.post(ajaxurl, data, function(response){
+      response = JSON.parse(response);
+
+      if (response['result']){
+        console.log(response);
+      }
+    });
+
+  });
+
+  $('#skmSchedulerAdminArea').on('click', '#selectAll', function(){
+    if ( !$('#selectDays input').attr('checked') )
+      $('#selectDays input').attr('checked', true);
+    else
+      $('#selectDays input').attr('checked', false);
+  });
+
+/*
+ * FUNCIONES DE LA TAB DE RADIOS ----------------------------------------------
+ */
 
   $('#skmRadiosAdminArea').off().on('submit', '#newRadioForm', function(e){
     e.stopPropagation();
@@ -113,7 +189,7 @@ $(function(){
       $('#submitButton').html('Cargar');
 
       if (isNewRadio)
-        processResult(response['result'], response['radio'], '#skmRadiosAdminArea', radioRow);
+        processResult(response['result'], response['radio'], response['msg'], '#skmRadiosAdminArea', radioRow);
       else{
         if (response['result']){
           let id = response['obj']['id'];

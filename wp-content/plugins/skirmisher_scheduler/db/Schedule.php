@@ -31,7 +31,7 @@ class Schedule{
       'saturday'  => $value['saturday'],
       'begin_time' => $value['begin_time'],
       'end_time' => $value['end_time'],
-      'radio' => $value['radio']
+      'radio_id' => $value['radio_id']
     ];
 
     $result = $wpdb->insert($tablename, $toSave);
@@ -47,8 +47,13 @@ class Schedule{
   static function getAll(){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
+    $postTable = $wpdb->prefix . 'posts';
+    $radiosTable = $wpdb->prefix . Radios::TABLE;
 
-    $queryStr = 'SELECT * FROM '. $tablename .' ORDER BY id ASC';
+    $queryStr = 'SELECT * FROM '. $tablename;
+    $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio_id='.$radiosTable.'.id';
+    $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
+    $queryStr .= ' ORDER BY schedule_id ASC';
     return $wpdb->get_results($queryStr, ARRAY_A);
   }
 
@@ -70,14 +75,17 @@ class Schedule{
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
     $postTable = $wpdb->prefix . 'posts';
+    $radiosTable = $wpdb->prefix . Radios::TABLE;
 
 
     $queryStr = 'SELECT * FROM '. $tablename;
+    $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio_id='.$radiosTable.'.id';
     $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
-    $queryStr .= ' WHERE '.$tablename.'.id=%d';
+    $queryStr .= ' WHERE '.$tablename.'.schedule_id=%d';
     $query = $wpdb->prepare($queryStr, array($id));
     return $wpdb->get_results($query, ARRAY_A);
   }
+
 
   static function getByRadioAndDay($radio, $day){
     global $wpdb;
@@ -88,11 +96,11 @@ class Schedule{
     $cols = self::getCols();
 
     $queryStr  = 'SELECT * FROM '. $tablename;
-    $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio='.$radiosTable.'.id';
+    $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio_id='.$radiosTable.'.id';
     $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
-    $queryStr .= ' WHERE '.$tablename.'.id=%d AND '.$tablename.'.'.$cols[$day].'=1';
+    $queryStr .= ' WHERE '.$radiosTable.'.id=%d AND '.$tablename.'.'.$cols[$day].'=1';
 
-    $query = $wpdb->prepare($queryStr, array($id));
+    $query = $wpdb->prepare($queryStr, array($radio));
 
     return $wpdb->get_results($query, ARRAY_A);
   }
