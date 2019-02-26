@@ -44,6 +44,28 @@ class Schedule{
     return $wpdb->delete( $tablename, ['id' => $id]);
   }
 
+  static function edit($id, $value){
+    global $wpdb;
+    $table = $wpdb->prefix . self::TABLE;
+
+    $toSave = [
+      'event_id'  => $value['event_id'],
+      'sunday'    => $value['sunday'],
+      'monday'    => $value['monday'],
+      'tuesday'   => $value['tuesday'],
+      'wednesday' => $value['wednesday'],
+      'thursday'  => $value['thursday'],
+      'friday'    => $value['friday'],
+      'saturday'  => $value['saturday'],
+      'begin_time' => $value['begin_time'],
+      'end_time' => $value['end_time'],
+      'radio_id' => $value['radio_id']
+    ];
+
+    $result = $wpdb->update( $table, $toSave, ['schedule_id' => $id]);
+    return $result>0 ? $id : 0;
+  }
+   
   static function getAll(){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
@@ -86,7 +108,6 @@ class Schedule{
     return $wpdb->get_results($query, ARRAY_A);
   }
 
-
   static function getByRadioAndDay($radio, $day){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
@@ -104,7 +125,6 @@ class Schedule{
 
     return $wpdb->get_results($query, ARRAY_A);
   }
-
 
   static function getEventById($event_id){
     return get_post($event_id, ARRAY_A);

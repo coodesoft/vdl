@@ -145,7 +145,7 @@ $(function(){
   $('#skmSchedulerAdminArea').on('click', '.skm-confirm-edit', function(){
     let data = {
       data: $(this).closest('form').serialize(),
-      action: 'skm_confirm_edit_event',
+      action: 'skm_edit_event',
     }
     console.log($(this).closest('form'));
 

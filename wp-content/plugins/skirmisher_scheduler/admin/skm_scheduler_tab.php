@@ -2,67 +2,67 @@
 
 function skm_schedule_table(){ ?>
   <?php $events = Schedule::getAll(); ?>
-  <table class="table table-striped">
-    <thead>
-      <tr>
-        <th scope="col">Programa</th>
-        <th scope="col">Dom</th>
-        <th scope="col">Lun</th>
-        <th scope="col">Mar</th>
-        <th scope="col">Mié</th>
-        <th scope="col">Jue</th>
-        <th scope="col">Vie</th>
-        <th scope="col">Sáb</th>
-        <th scope="col">Hora</th>
-        <th scope="col">Radio</th>
-        <th scope="col">Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php if (count($events) == 0) { ?>
+  <form class="col-12">
+    <table class="table table-striped">
+      <thead>
         <tr>
-          <td colspan="10" class="text-center">No hay programación cargada</td>
+          <th scope="col">Programa</th>
+          <th scope="col">Dom</th>
+          <th scope="col">Lun</th>
+          <th scope="col">Mar</th>
+          <th scope="col">Mié</th>
+          <th scope="col">Jue</th>
+          <th scope="col">Vie</th>
+          <th scope="col">Sáb</th>
+          <th scope="col">Hora</th>
+          <th scope="col">Radio</th>
+          <th scope="col">Acciones</th>
         </tr>
-      <?php } ?>
-      <?php foreach ($events as $key => $event): ?>
-        <tr class="schedule-<?php echo $event['schedule_id'] ?>" data-id="<?php echo $event['schedule_id'] ?>">
-          <form>
-            <td><?php echo $event['post_title']?></td>
-            <td class="d-none"><input type="text" name="eventSelect" value="<?php echo $event['ID']?>" placeholder="<?php echo $event['post_title']?>"></td>
-            <td><input type="checkbox" disabled value="sunday" name="programDay[]" <?php echo ($event['sunday'] ? 'checked' : '')?>></td>
-            <td><input type="checkbox" disabled value="monday" name="programDay[]" <?php echo ($event['monday'] ? 'checked' : '-') ?>></td>
-            <td><input type="checkbox" disabled value="tuesday" name="programDay[]" <?php echo ($event['tuesday'] ? 'checked' : '-') ?>></td>
-            <td><input type="checkbox" disabled value="wednesday" name="programDay[]" <?php echo ($event['wednesday'] ? 'checked' : '-') ?>></td>
-            <td><input type="checkbox" disabled value="thursday" name="programDay[]" <?php echo ($event['thursday'] ? 'checked' : '-') ?>></td>
-            <td><input type="checkbox" disabled value="friday" name="programDay[]" <?php echo ($event['friday'] ? 'checked' : '-') ?>></td>
-            <td><input type="checkbox" disabled value="saturday" name="programDay[]" <?php echo ($event['saturday'] ? 'checked' : '-') ?>></td>
-            <td class="data-text"><?php echo $event['begin_time']."-".$event['end_time']?></td>
-            <td class="data-select d-none">
-              <input type="time" name="horaInicio" value="<?php echo $event['begin_time']?>" disabled>
-              <input type="time" name="horaFin" value="<?php echo $event['end_time']?>" disabled>
-            </td>
-            <td class="data-text"><?php echo $event['radio']?></td>
-            <td class="data-select d-none">
-              <?php $radios = Radios::getAll(); ?>
-              <select id="radioSelect" name="radioSelect" required>
-                <option id="emptyOption" value="0" disabled selected>Seleccione una radio</option>
-                <?php foreach ($radios as $key => $obj): ?>
-                  <option class="radio-<?php echo $obj['id']?>" value="<?php echo $obj['id']?>"><?php echo $obj['radio'] ?></option>
-                <?php endforeach; ?>
-              </select>
-            </td>
-            <td>
-              <div class="skm-edit d-inline"><i class="fas fa-edit fa-lg"></i></div>
-              <div class="skm-delete d-inline"><i class="fas fa-trash-alt fa-lg"></i></div>
+      </thead>
+      <tbody>
+        <?php if (count($events) == 0) { ?>
+          <tr>
+            <td colspan="10" class="text-center">No hay programación cargada</td>
+          </tr>
+        <?php } ?>
+        <?php foreach ($events as $key => $event): ?>
+          <tr class="schedule-<?php echo $event['schedule_id'] ?>" data-id="<?php echo $event['schedule_id'] ?>">
+              <td><?php echo $event['post_title']?></td>
+              <td class="d-none"><input type="text" disabled name="ScheduleItem[<?php echo $event['schedule_id']?>][eventPost]" value="<?php echo $event['ID']?>" placeholder="<?php echo $event['post_title']?>"></td>
+              <td><input type="checkbox" disabled value="sunday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['sunday'] ? 'checked' : '')?>></td>
+              <td><input type="checkbox" disabled value="monday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['monday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="tuesday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['tuesday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="wednesday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['wednesday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="thursday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['thursday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="friday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['friday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="saturday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['saturday'] ? 'checked' : '-') ?>></td>
+              <td class="data-text"><?php echo $event['begin_time']."-".$event['end_time']?></td>
+              <td class="data-select d-none">
+                <input type="time" name="ScheduleItem[<?php echo $event['schedule_id']?>][horaInicio]" value="<?php echo $event['begin_time']?>" disabled>
+                <input type="time" name="ScheduleItem[<?php echo $event['schedule_id']?>][horaFin]" value="<?php echo $event['end_time']?>" disabled>
+              </td>
+              <td class="data-text"><?php echo $event['radio']?></td>
+              <td class="data-select d-none">
+                <?php $radios = Radios::getAll(); ?>
+                <select id="radioSelect" name="ScheduleItem[<?php echo $event['schedule_id']?>][radioSelect]" required>
+                  <option id="emptyOption" value="0" disabled selected>Seleccione una radio</option>
+                  <?php foreach ($radios as $key => $obj): ?>
+                    <option class="radio-<?php echo $obj['id']?>" value="<?php echo $obj['id']?>"><?php echo $obj['radio'] ?></option>
+                  <?php endforeach; ?>
+                </select>
+              </td>
+              <td><!--EDIT BUTTONS-->
+                <div class="skm-edit d-inline"><i class="fas fa-edit fa-lg"></i></div>
+                <div class="skm-delete d-inline"><i class="fas fa-trash-alt fa-lg"></i></div>
 
-              <div class="skm-confirm-edit d-none"><i class="fas fa-check-circle fa-lg"></i></div>
-              <div class="skm-cancel-edit d-none"><i class="fas fa-times-circle fa-lg"></i></div>
-            </td>
-          </form>
-        </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
+                <div class="skm-confirm-edit d-none"><i class="fas fa-check-circle fa-lg"></i></div>
+                <div class="skm-cancel-edit d-none"><i class="fas fa-times-circle fa-lg"></i></div>
+              </td>
+          </tr>
+        <?php endforeach; ?>
+      </tbody>
+    </table>
+  </form>
 <? }
 
 function skm_scheduler_tab(){
@@ -149,7 +149,7 @@ function skm_scheduler_tab(){
 						<button id="addEventSchedule" type="button" class="btn btn-dark">Cargar</button>
 					</div>
         </div>
-    </form>
+      </form>
 
 			<div class="row">
         <?php skm_schedule_table() ?>
@@ -208,17 +208,41 @@ add_action( 'wp_ajax_skm_edit_event', 'skirmisher_edit_event' );
 function skirmisher_edit_event(){
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST'){
+    parse_str($_POST['data'], $params);
+    $scheduleItems = $params['ScheduleItem'];
 
+    foreach ($scheduleItems as $key => $item) {
+
+      $toSave['event_id'] = $item['eventPost'];
+      $toSave['radio_id'] = $item['radioSelect'];
+    	$toSave['begin_time'] = $item['horaInicio'];
+      $toSave['end_time'] = $item['horaFin'];
+    	$toSave['sunday'] = 0;
+    	$toSave['monday'] = 0;
+    	$toSave['tuesday'] = 0;
+    	$toSave['wednesday'] = 0;
+    	$toSave['thursday'] = 0;
+    	$toSave['friday'] = 0;
+    	$toSave['saturday'] = 0;
+
+      foreach ($item['day'] as $key => $day) {
+    		$toSave[$day] = 1;
+    	}
+
+      $result = Schedule::edit(intval($key), $toSave);
+
+      echo json_encode($result);
+    }
   } else{
     $id = $_GET['toEditId'];
     $schedule = Schedule::getById($id);
 
     if (count($schedule)>0)
-      echo json_encode( ['result' => true, 'obj' => $schedule[0]] );
+      echo json_encode( [ 'result' => true, 'obj' => $schedule[0] ] );
     else
       echo json_encode( ['result' => false, 'msg' => 'Ops, hay algo mal que no anda bien. No se pudo cargar la programación solicitada para su edición.'] );
-    wp_die();
   }
+  wp_die();
 }
 
 add_action( 'wp_ajax_skm_confirm_edit_event', 'skirmisher_confirm_edit_event' );
