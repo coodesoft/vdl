@@ -24,15 +24,20 @@ let radioRow = function (radio){
   return row;
 }
 
-let showMessage = function(container, message){
+let showMessage = function(container, message, type){
+  if (type == undefined)
+    type = 'danger';
+
   $(container+' .response').html(message);
-  $(container+' .response').addClass('alert-danger');
+  $(container+' .response').addClass('alert-'+type);
   $(container+' .response').removeClass('d-none');
   setTimeout(function(){
-    $(container+' .response').removeClass('alert-danger');
+    $(container+' .response').removeClass('alert-'+type);
     $(container+' .response').addClass('d-none');
   }, 1000);
 }
+
+
 
 let processResult = function(result, data, errorMsg, container, callback){
   if (result){
@@ -48,10 +53,10 @@ let processResult = function(result, data, errorMsg, container, callback){
 }
 
 let cleanScheduleForm = function(){
-//  $('#radioSelect').val("");
+ //  $('#radioSelect').val("");
   $('#radioSelect').prop("selectedIndex",0);
 
-//  $('#eventsSelect').val("");
+  //  $('#eventsSelect').val("");
   $('#eventsSelect').prop("selectedIndex",0);
 
   $('#eventsSelect').attr('disabled', false);
@@ -84,35 +89,44 @@ $(function(){
       $('#eventsForm input[type=checkbox]').prop('checked',false);
       $('#emptyOption').prop('selected', true);
 
-      processResult(response['result'], response['schedule'], response['msg'], '#skmSchedulerAdminArea', scheduleRow);
+      processResult(response['result'], response['schedule'], response['msg'], '#skmSchedulerAdminArea', function(){
+        return response['schedule'];
+      });
     });
   });
 
   $('#skmSchedulerAdminArea').on('click', '.skm-delete', function(){
-    let self = $(this)
-    let data = {
-      'to_delete' : self.closest('tr').attr('data-id'),
-      'action' : 'skm_delete_event'
+    let proceed = confirm('Vas a eliminar un evento. ¿Deseas continuar?');
+
+    if (proceed){
+          let self = $(this);
+          let data = {
+            'to_delete' : self.closest('tr').attr('data-id'),
+            'action' : 'skm_delete_event'
+          }
+
+          $.post(ajaxurl, data, function(response){
+            response = JSON.parse(response);
+            if (response){
+              self.closest('tr').remove();
+            } else{
+              $('#smkSchedulerAdminArea .response').html(response['msj']);
+              $('#smkSchedulerAdminArea .response').addClass('alert-danger');
+              $('#smkSchedulerAdminArea .response').removeClass('d-none');
+              setTimeout(function(){
+                $('#smkSchedulerAdminArea .response').removeClass('alert-danger');
+                $('#smkSchedulerAdminArea .response').addClass('d-none');
+              }, 1000);
+            }
+
+          });
     }
 
-    $.post(ajaxurl, data, function(response){
-      response = JSON.parse(response);
-      if (response){
-        self.closest('tr').remove();
-      } else{
-        $('#smkSchedulerAdminArea .response').html(response['msj']);
-        $('#smkSchedulerAdminArea .response').addClass('alert-danger');
-        $('#smkSchedulerAdminArea .response').removeClass('d-none');
-        setTimeout(function(){
-          $('#smkSchedulerAdminArea .response').removeClass('alert-danger');
-          $('#smkSchedulerAdminArea .response').addClass('d-none');
-        }, 1000);
-      }
-
-    });
   });
 
   $('#skmSchedulerAdminArea').on('click', '.skm-edit', function(){
+      $('.skm-cancel-edit').click();
+
       $(this).addClass('d-none').removeClass('d-inline');
       $(this).siblings('.skm-delete').addClass('d-none').removeClass('d-inline');
 
@@ -122,6 +136,7 @@ $(function(){
       let $row = $(this).closest('tr');
 
       $row.find('input').attr('disabled', false);
+      $row.find('select').attr('disabled', false);
       $row.find('td.data-text').addClass('d-none');
       $row.find('td.data-select').removeClass('d-none');
 
@@ -137,6 +152,7 @@ $(function(){
     let $row = $(this).closest('tr');
 
     $row.find('input').attr('disabled', true);
+    $row.find('select').attr('disabled', true);
     $row.find('td.data-select').addClass('d-none');
     $row.find('td.data-text').removeClass('d-none');
 
@@ -147,13 +163,28 @@ $(function(){
       data: $(this).closest('form').serialize(),
       action: 'skm_edit_event',
     }
-    console.log($(this).closest('form'));
 
     $.post(ajaxurl, data, function(response){
       response = JSON.parse(response);
+      $('.skm-cancel-edit').click();
 
-      if (response['result']){
-        console.log(response);
+      if (response['status']){
+        showMessage('#skmSchedulerAdminArea', response['msg'], 'success');
+
+        $row = $('tr.schedule-'+response['entity_uid']);
+        $row.addClass('skm-table-row-success');
+        setTimeout(function(){
+          $row.removeClass('skm-table-row-success');
+        }, 1000);
+      } else{
+        showMessage('#skmSchedulerAdminArea', response['msg']);
+
+        $row = $('tr.schedule-'+response['entity_uid']);
+        $row.addClass('skm-table-row-danger');
+        setTimeout(function(){
+          $row.removeClass('skm-table-row-danger');
+        }, 1000);
+
       }
     });
 
@@ -243,21 +274,26 @@ $(function(){
   });
 
   $('#skmRadiosAdminArea').on('click', '.delete-radio', function(){
+    let proceed = confirm('Vas a eliminar una radio. Deseas continuar?');
 
-    let data = {
-      data: $(this).closest('tr').attr('data-radio'),
-      action: 'skm_delete_radio',
-    };
+    if (proceed){
+
+          let data = {
+            data: $(this).closest('tr').attr('data-radio'),
+            action: 'skm_delete_radio',
+          };
 
 
-    $.post(ajaxurl, data, function(response){
-      response = JSON.parse(response);
+          $.post(ajaxurl, data, function(response){
+            response = JSON.parse(response);
 
-      if (response['result'])
-        $('tr.radio-'+response['radio_id']).remove();
-      else
-          showMessage('#skmRadiosAdminArea', response['msg']);
-    });
+            if (response['result'])
+              $('tr.radio-'+response['radio_id']).remove();
+            else
+                showMessage('#skmRadiosAdminArea', response['msg']);
+          });
+    }
+
 
   });
 });

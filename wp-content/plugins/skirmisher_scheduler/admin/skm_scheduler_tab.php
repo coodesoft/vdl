@@ -28,30 +28,36 @@ function skm_schedule_table(){ ?>
         <?php foreach ($events as $key => $event): ?>
           <tr class="schedule-<?php echo $event['schedule_id'] ?>" data-id="<?php echo $event['schedule_id'] ?>">
               <td><?php echo $event['post_title']?></td>
-              <td class="d-none"><input type="text" disabled name="ScheduleItem[<?php echo $event['schedule_id']?>][eventPost]" value="<?php echo $event['ID']?>" placeholder="<?php echo $event['post_title']?>"></td>
-              <td><input type="checkbox" disabled value="sunday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['sunday'] ? 'checked' : '')?>></td>
-              <td><input type="checkbox" disabled value="monday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['monday'] ? 'checked' : '-') ?>></td>
-              <td><input type="checkbox" disabled value="tuesday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['tuesday'] ? 'checked' : '-') ?>></td>
-              <td><input type="checkbox" disabled value="wednesday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['wednesday'] ? 'checked' : '-') ?>></td>
-              <td><input type="checkbox" disabled value="thursday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['thursday'] ? 'checked' : '-') ?>></td>
-              <td><input type="checkbox" disabled value="friday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['friday'] ? 'checked' : '-') ?>></td>
-              <td><input type="checkbox" disabled value="saturday" name="ScheduleItem[<?php echo $event['schedule_id']?>][day][]" <?php echo ($event['saturday'] ? 'checked' : '-') ?>></td>
+              <td class="d-none">
+                <input type="text" disabled name="ScheduleItem[eventPost]" value="<?php echo $event['ID']?>" placeholder="<?php echo $event['post_title']?>">
+                <input type="hidden" disabled name="ScheduleItem[scheduleId]" value="<?php echo $event['schedule_id']?>">
+              </td>
+              <td><input type="checkbox" disabled value="sunday" name="ScheduleItem[day][]" <?php echo ($event['sunday'] ? 'checked' : '')?>></td>
+              <td><input type="checkbox" disabled value="monday" name="ScheduleItem[day][]" <?php echo ($event['monday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="tuesday" name="ScheduleItem[day][]" <?php echo ($event['tuesday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="wednesday" name="ScheduleItem[day][]" <?php echo ($event['wednesday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="thursday" name="ScheduleItem[day][]" <?php echo ($event['thursday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="friday" name="ScheduleItem[day][]" <?php echo ($event['friday'] ? 'checked' : '-') ?>></td>
+              <td><input type="checkbox" disabled value="saturday" name="ScheduleItem[day][]" <?php echo ($event['saturday'] ? 'checked' : '-') ?>></td>
               <td class="data-text"><?php echo $event['begin_time']."-".$event['end_time']?></td>
               <td class="data-select d-none">
-                <input type="time" name="ScheduleItem[<?php echo $event['schedule_id']?>][horaInicio]" value="<?php echo $event['begin_time']?>" disabled>
-                <input type="time" name="ScheduleItem[<?php echo $event['schedule_id']?>][horaFin]" value="<?php echo $event['end_time']?>" disabled>
+                <input type="time" name="ScheduleItem[horaInicio]" value="<?php echo $event['begin_time']?>" disabled>
+                <input type="time" name="ScheduleItem[horaFin]" value="<?php echo $event['end_time']?>" disabled>
               </td>
               <td class="data-text"><?php echo $event['radio']?></td>
               <td class="data-select d-none">
                 <?php $radios = Radios::getAll(); ?>
-                <select id="radioSelect" name="ScheduleItem[<?php echo $event['schedule_id']?>][radioSelect]" required>
-                  <option id="emptyOption" value="0" disabled selected>Seleccione una radio</option>
+                <select id="radioSelect" name="ScheduleItem[radioSelect]" required>
+                  <option id="emptyOption" value="0" disabled>Seleccione una radio</option>
                   <?php foreach ($radios as $key => $obj): ?>
-                    <option class="radio-<?php echo $obj['id']?>" value="<?php echo $obj['id']?>"><?php echo $obj['radio'] ?></option>
+                    <?php $selected = $obj['id'] ==  $event['radio_id'] ? 'selected': '' ?>
+                    <option class="radio-<?php echo $obj['id']?>" value="<?php echo $obj['id']?>" <?php echo $selected ?>>
+                      <?php echo $obj['radio'] ?>
+                    </option>
                   <?php endforeach; ?>
                 </select>
               </td>
-              <td><!--EDIT BUTTONS-->
+              <td class="skm-table-actions"><!--EDIT BUTTONS-->
                 <div class="skm-edit d-inline"><i class="fas fa-edit fa-lg"></i></div>
                 <div class="skm-delete d-inline"><i class="fas fa-trash-alt fa-lg"></i></div>
 
@@ -64,6 +70,50 @@ function skm_schedule_table(){ ?>
     </table>
   </form>
 <? }
+
+function skm_row($event){ ?>
+    <tr class="schedule-<?php echo $event['schedule_id'] ?>" data-id="<?php echo $event['schedule_id'] ?>">
+        <td><?php echo $event['post_title']?></td>
+        <td class="d-none">
+          <input type="text" disabled name="ScheduleItem[eventPost]" value="<?php echo $event['ID']?>" placeholder="<?php echo $event['post_title']?>">
+          <input type="hidden" disabled name="ScheduleItem[scheduleId]" value="<?php echo $event['schedule_id']?>">
+        </td>
+        <td><input type="checkbox" disabled value="sunday" name="ScheduleItem[day][]" <?php echo ($event['sunday'] ? 'checked' : '')?>></td>
+        <td><input type="checkbox" disabled value="monday" name="ScheduleItem[day][]" <?php echo ($event['monday'] ? 'checked' : '-') ?>></td>
+        <td><input type="checkbox" disabled value="tuesday" name="ScheduleItem[day][]" <?php echo ($event['tuesday'] ? 'checked' : '-') ?>></td>
+        <td><input type="checkbox" disabled value="wednesday" name="ScheduleItem[day][]" <?php echo ($event['wednesday'] ? 'checked' : '-') ?>></td>
+        <td><input type="checkbox" disabled value="thursday" name="ScheduleItem[day][]" <?php echo ($event['thursday'] ? 'checked' : '-') ?>></td>
+        <td><input type="checkbox" disabled value="friday" name="ScheduleItem[day][]" <?php echo ($event['friday'] ? 'checked' : '-') ?>></td>
+        <td><input type="checkbox" disabled value="saturday" name="ScheduleItem[day][]" <?php echo ($event['saturday'] ? 'checked' : '-') ?>></td>
+        <td class="data-text"><?php echo $event['begin_time']."-".$event['end_time']?></td>
+        <td class="data-select d-none">
+          <input type="time" name="ScheduleItem[horaInicio]" value="<?php echo $event['begin_time']?>" disabled>
+          <input type="time" name="ScheduleItem[horaFin]" value="<?php echo $event['end_time']?>" disabled>
+        </td>
+        <td class="data-text"><?php echo $event['radio']?></td>
+        <td class="data-select d-none">
+          <?php $radios = Radios::getAll(); ?>
+          <select id="radioSelect" name="ScheduleItem[radioSelect]" required>
+            <option id="emptyOption" value="0" disabled>Seleccione una radio</option>
+            <?php foreach ($radios as $key => $obj): ?>
+              <?php $selected = $obj['id'] ==  $event['radio_id'] ? 'selected': '' ?>
+              <option class="radio-<?php echo $obj['id']?>" value="<?php echo $obj['id']?>" <?php echo $selected ?>>
+                <?php echo $obj['radio'] ?>
+              </option>
+            <?php endforeach; ?>
+          </select>
+        </td>
+        <td class="skm-table-actions"><!--EDIT BUTTONS-->
+          <div class="skm-edit d-inline"><i class="fas fa-edit fa-lg"></i></div>
+          <div class="skm-delete d-inline"><i class="fas fa-trash-alt fa-lg"></i></div>
+
+          <div class="skm-confirm-edit d-none"><i class="fas fa-check-circle fa-lg"></i></div>
+          <div class="skm-cancel-edit d-none"><i class="fas fa-times-circle fa-lg"></i></div>
+        </td>
+    </tr>
+
+<?php }
+
 
 function skm_scheduler_tab(){
   $args = array( 'post_type' => 'events' );
@@ -183,9 +233,12 @@ function skirmisher_add_event(){
 
 	if ($schedule_id){
  	  $schedule = Schedule::getById($schedule_id);
-		$toSave['id'] = $schedule_id;
-		$toSave['title'] = $schedule[0]['post_title'];
-		echo json_encode(['result' => true, 'schedule' => $toSave]);
+		$toSave['schedule_id'] = $schedule_id;
+		$toSave['post_title'] = $schedule[0]['post_title'];
+
+    $result = skm_row($toSave);
+
+		echo json_encode(['result' => true, 'schedule' => $result]);
 	} else
 		echo json_encode(['result' => false, 'msg' => 'Ops, hay algo mal que no anda bien. Se produjo un error al guardar la programación' ]);
 	wp_die();
@@ -196,11 +249,17 @@ function skirmisher_delete_event(){
 	$params = array();
 	parse_str($_POST, $params);
 
-	$result = Schedule::delete($_POST['to_delete']);
-	if (!$result)
-		echo json_encode(['result' => $result, 'msg' => 'Se produjo un error inesperado el eliminar el evento. Consulte con el administrador!']);
-	else
-		echo json_encode(['result' => $result, 't_delete' => $_POST['to_delete']] );
+  $id = intval($_POST['to_delete']);
+  if ($id){
+    $result = Schedule::delete($id);
+    if (!$result)
+  		echo json_encode(['result' => $result, 'msg' => 'Se produjo un error inesperado el eliminar el evento. Consulte con el administrador!']);
+  	else
+  		echo json_encode(['result' => $result, 't_delete' => $_POST['to_delete']] );
+
+  } else {
+    echo json_encode(['result' => false, 'msg' => 'No existe ningun evento con el ID enviado']);
+  }
 	wp_die();
 }
 
@@ -209,36 +268,38 @@ function skirmisher_edit_event(){
 
   if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     parse_str($_POST['data'], $params);
-    $scheduleItems = $params['ScheduleItem'];
+    $item = $params['ScheduleItem'];
 
-    foreach ($scheduleItems as $key => $item) {
+    $toSave['event_id'] = $item['eventPost'];
+    $toSave['radio_id'] = $item['radioSelect'];
+  	$toSave['begin_time'] = $item['horaInicio'];
+    $toSave['end_time'] = $item['horaFin'];
+  	$toSave['sunday'] = 0;
+  	$toSave['monday'] = 0;
+  	$toSave['tuesday'] = 0;
+  	$toSave['wednesday'] = 0;
+  	$toSave['thursday'] = 0;
+  	$toSave['friday'] = 0;
+  	$toSave['saturday'] = 0;
 
-      $toSave['event_id'] = $item['eventPost'];
-      $toSave['radio_id'] = $item['radioSelect'];
-    	$toSave['begin_time'] = $item['horaInicio'];
-      $toSave['end_time'] = $item['horaFin'];
-    	$toSave['sunday'] = 0;
-    	$toSave['monday'] = 0;
-    	$toSave['tuesday'] = 0;
-    	$toSave['wednesday'] = 0;
-    	$toSave['thursday'] = 0;
-    	$toSave['friday'] = 0;
-    	$toSave['saturday'] = 0;
+    foreach ($item['day'] as $key => $day) {
+  		$toSave[$day] = 1;
+  	}
 
-      foreach ($item['day'] as $key => $day) {
-    		$toSave[$day] = 1;
-    	}
+    $result = Schedule::edit(intval($item['scheduleId']), $toSave);
 
-      $result = Schedule::edit(intval($key), $toSave);
+    if ($result)
+      echo json_encode(['status' => true, 'msg' => 'Se actualizó correctamente el evento.', 'entity_uid'=> $item['scheduleId']]);
+    else
+      echo json_encode(['status' => false, 'msg' => 'Apa, Se produjo un error al actualizar el evento.', 'entity_uid'=> $item['scheduleId']]);
 
-      echo json_encode($result);
-    }
+    echo json_encode();
   } else{
     $id = $_GET['toEditId'];
     $schedule = Schedule::getById($id);
 
     if (count($schedule)>0)
-      echo json_encode( [ 'result' => true, 'obj' => $schedule[0] ] );
+      echo json_encode( ['result' => true, 'obj' => $schedule[0] ] );
     else
       echo json_encode( ['result' => false, 'msg' => 'Ops, hay algo mal que no anda bien. No se pudo cargar la programación solicitada para su edición.'] );
   }

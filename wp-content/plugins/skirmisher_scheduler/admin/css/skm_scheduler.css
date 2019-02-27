@@ -6,3 +6,30 @@
 #skmSchedulerAdminArea #buttonArea{
   margin-bottom: 20px;
 }
+
+.skm-table-row-success{
+  border-collapse: collapse;
+  border: 3px solid green;
+}
+
+.skm-table-row-danger{
+  border-collapse: collapse;
+  border: 3px solid red;
+}
+
+td.skm-table-actions{
+  cursor: pointer;
+}
+
+.skm-confirm-edit:hover{
+  color: green;
+}
+
+.skm-cancel-edit:hover{
+  color: red;
+}
+
+.skm-edit:hover,
+.skm-delete:hover{
+  color: #424a52;
+}

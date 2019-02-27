@@ -41,7 +41,7 @@ class Schedule{
   static function delete($id){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
-    return $wpdb->delete( $tablename, ['id' => $id]);
+    return $wpdb->delete( $tablename, ['schedule_id' => $id]);
   }
 
   static function edit($id, $value){
@@ -65,7 +65,7 @@ class Schedule{
     $result = $wpdb->update( $table, $toSave, ['schedule_id' => $id]);
     return $result>0 ? $id : 0;
   }
-   
+
   static function getAll(){
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
