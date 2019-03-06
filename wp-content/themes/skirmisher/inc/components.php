@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 
 function the_skirmisher_post_categories($post_id = null, $rootCat = true){ ?>
@@ -15,7 +15,7 @@ function the_skirmisher_post_categories($post_id = null, $rootCat = true){ ?>
 		<?php }
 	  } ?>
     </ul>
-<?php 
+<?php
 }
 
 function the_skirmisher_subcategories($parent_catId, $currentCat){ ?>
@@ -29,24 +29,22 @@ function the_skirmisher_subcategories($parent_catId, $currentCat){ ?>
 					</a>
 				</li>
 		 <?php } ?>
-	</ul>	
-	
-	
-<?php 
+	</ul>
+
+
+<?php
 }
 
-function skirmisher_post_slider(){ 
+function skirmisher_post_slider(){
 
 	$args = array( 'category_name' => 'Slider' );
 	$sliderPosts = get_posts( $args );
 	//echo json_encode($sliderPosts[0]);
 ?>
-
-
 	<div id="skirmisher-slider" class="carousel slide" data-ride="carousel">
 
 	  <div class="carousel-inner">
-		
+
 		<?php  foreach( $sliderPosts as $key => $post ) : ?>
 			<div class="carousel-item <?php echo ($key==0) ? 'active' : '' ?>">
 				<?php $ruta_imagen = skirmisher_attachment_img($post->ID) ?>
@@ -73,5 +71,5 @@ function skirmisher_post_slider(){
 		<li data-target="#skirmisher-slider" data-slide-to="2"></li>
 	  </ol>
 	</div>
-	
+
 <?php } ?>

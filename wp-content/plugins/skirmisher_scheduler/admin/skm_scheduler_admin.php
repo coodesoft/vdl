@@ -8,7 +8,7 @@ function skm_schedule_admin_menu(){
 	add_menu_page('Skirmisher Scheduler', 'Skirmisher Scheduler', 'manage_options', 'global_skirmisher_scheduler', 'global_skirmisher_admin');
 }
 
-wp_register_script('skm_scheduler_admin', plugins_url('/js/skm_scheduler.js', __FILE__), ['jquery_js'], false, true );
+wp_register_script('skm_scheduler_admin', plugins_url('/js/skm_scheduler.js', __FILE__), ['jquery'], false, true );
 add_action('admin_enqueue_scripts', 'add_scripts_admin' );
 function add_scripts_admin(){
     wp_enqueue_script( 'skm_scheduler_admin' );

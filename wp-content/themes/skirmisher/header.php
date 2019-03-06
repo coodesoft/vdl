@@ -45,38 +45,17 @@
 							</nav><!-- .main-navigation -->
 						<?php endif; ?>
 
-						<?php if ( has_nav_menu( 'social' ) ) : ?>
-							<nav id="social-navigation" class="social-navigation" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
-								<?php
-									wp_nav_menu( array(
-										'theme_location' => 'social',
-										'menu_class'     => 'social-links-menu',
-										'depth'          => 1,
-										'link_before'    => '<span class="screen-reader-text">',
-										'link_after'     => '</span>',
-									) );
-								?>
-							</nav><!-- .social-navigation -->
-						<?php endif; ?>
 					</div><!-- .site-header-menu -->
 				<?php endif; ?>
 
 				<div class="site-branding">
-					<?php twentysixteen_the_custom_logo(); ?>
+					<?php twentysixteen_the_custom_logo();
 
-					<?php if ( is_front_page() && is_home() ) : ?>
-						<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-					<?php else : ?>
-						<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-					<?php endif;
-
-					$description = get_bloginfo( 'description', 'display' );
-					if ( $description || is_customize_preview() ) : ?>
-						<p class="site-description"><?php echo $description; ?></p>
-					<?php endif; ?>
+					echo do_shortcode('[wpc-weather id="85"]');
+ 					?>
 				</div><!-- .site-branding -->
 
-				
+
 			</div><!-- .site-header-main -->
 
 			<?php if ( get_header_image() ) : ?>
@@ -99,16 +78,19 @@
 				</div><!-- .header-image -->
 			<?php endif; // End header image check. ?>
 
-			<?php if ( has_nav_menu( 'skirmisher-nav' ) ) : ?>
-				<nav role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
-					<?php
-						wp_nav_menu( array(
-							'theme_location' => 'skirmisher-nav',
-							'menu_class'     => 'skirmisher-nav-links',
-							'depth'          => 1,
-						) );
-					?>
-				</nav><!-- .skirmisher-navigation -->
+				<?php if ( has_nav_menu( 'skirmisher-nav' ) ) : ?>
+					<nav id="navSkirmisher" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
+						<?php
+						 	//chequea que no se muestre en las páginas de contacto y programación
+							if ( !is_page('contacto') && !is_page('programacion')) {
+								wp_nav_menu( array(
+									'theme_location' => 'skirmisher-nav',
+									'menu_class'     => 'skirmisher-nav-links',
+									'depth'          => 1,
+								) );
+							}
+						?>
+					</nav><!-- .skirmisher-navigation -->
 			<?php endif; ?>
 		</header><!-- .site-header -->
 

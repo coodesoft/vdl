@@ -63,7 +63,7 @@ body:before{
 	text-decoration: none;
 }
 
-.menu-categorias-container{
+#navSkirmisher{
   border-bottom: 2px solid orange;
 }
 
@@ -145,7 +145,7 @@ body:before{
 .post-link:hover{
   color: #212529;
   text-decoration: none;
- 
+
 }
 
 
@@ -171,5 +171,3 @@ body:before{
 #skirmisher-slider .carousel-indicators li.active{
 	background: #2e739c;
 }
-
-

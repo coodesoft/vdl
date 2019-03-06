@@ -1,73 +1,107 @@
 
-let scheduleRow = function(schedule){
-  let row = '<tr data-id="'+schedule['id']+'">';
-  row += '<td>'+schedule['title']+'</td>'
-  row += '<td>'+(schedule['sunday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['monday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['tuesday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['wednesday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['thursday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['friday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+(schedule['saturday'] ? "Sí" : "-" )+'</td>'
-  row += '<td>'+schedule['timetable']+'</td>'
-  row += '<td><i class="skirmisher-edit fas fa-edit"></i>';
-  row += '<i class="fas fa-trash-alt skirmisher-delete"></i></td>';
-  row += '</tr>';
-  return row;
-}
 
-let radioRow = function (radio){
-  let row = '<tr data-radio="'+radio['id']+'">';
-  row += '<td class="radio-'+radio['id']+'">'+radio['radio']+'</td>';
-  row += '<td><i class="edit-radio fas fa-edit"></i>';
-  row += '<i class="delete-radio fas fa-trash-alt"></i></td>';
-  return row;
-}
-
-let showMessage = function(container, message, type){
-  if (type == undefined)
-    type = 'danger';
-
-  $(container+' .response').html(message);
-  $(container+' .response').addClass('alert-'+type);
-  $(container+' .response').removeClass('d-none');
-  setTimeout(function(){
-    $(container+' .response').removeClass('alert-'+type);
-    $(container+' .response').addClass('d-none');
-  }, 1000);
-}
+(function($){
 
 
-
-let processResult = function(result, data, errorMsg, container, callback){
-  if (result){
-    let row = callback(data);
-
-    if ($('#emptyTable').length)
-      $(container+' table tbody').html(row);
-    else
-      $(container+' table tbody').append(row);
-  } else{
-    showMessage(container, errorMsg);
+  let scheduleRow = function(data){
+    let schedule = data['schedule'];
+    let radios = data['radios'];
+    let row = '<tr class="schedule-'+schedule['schedule_id']+'" data-id="'+schedule['schedule_id']+'">';
+      row += scheduleRowContent(schedule, radios);
+      row += '</tr>';
+    return row;
   }
-}
 
-let cleanScheduleForm = function(){
- //  $('#radioSelect').val("");
-  $('#radioSelect').prop("selectedIndex",0);
+  let scheduleRowContent = function(schedule, radios){
+    let row;
+    row += '<td>'+schedule['post_title']+'</td>';
+    row += '<td class="d-none">';
+    row +=    '<input type="text" disabled name="ScheduleItem[eventPost]" value="'+schedule['post_id']+'" placeholder="'+schedule['post_title']+'"/>';
+    row +=    '<input type="hidden" disabled name="ScheduleItem[scheduleId]" value="'+schedule['schedule_id']+'"/>';
+    row += '</td>';
+    row += '<td><input type="checkbox" disabled value="sunday" name="ScheduleItem[day][]" '+schedule['sunday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="monday" name="ScheduleItem[day][]" '+schedule['monday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="tuesday" name="ScheduleItem[day][]" '+schedule['tuesday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="wednesday" name="ScheduleItem[day][]" '+schedule['wednesday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="thursday" name="ScheduleItem[day][]" '+schedule['thursday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="friday" name="ScheduleItem[day][]" '+schedule['friday']+'/></td>';
+    row += '<td><input type="checkbox" disabled value="saturday" name="ScheduleItem[day][]" '+schedule['saturday']+'/></td>';
+    row += '<td class="data-text">'+schedule['begin_time']+' - '+schedule['end_time']+'</td>';
+    row += '<td class="data-select d-none">';
+    row +=    '<input type="time" name="ScheduleItem[horaInicio]" value="'+schedule['begin_time']+'" disabled/>';
+    row +=    '<input type="time" name="ScheduleItem[horaFin]" value="'+schedule['end_time']+'" disabled/>';
+    row += '</td>';
+    row += '<td class="data-text">'+schedule['radio']+'</td>';
+    row += '<td class="data-select d-none">';
+    row += '<select name="ScheduleItem[radioSelect]" id="radioSelect" required> <option value="0" id="emptyOption" disabled></option>';
+    let radio, selected;
+    for (var i = 0; i < radios.length; i++) {
+      radio = radios[i];
+      selected = radio['id'] == schedule['radio_id'] ? 'selected' : '';
+      row += '<option value="'+radio['id']+'" class="radio-'+radio['id']+'" '+selected+'>'+radio['radio']+'</option>';
+    }
+    row += '</select>';
+    row += '</td>';
+    row += '<td class="skm-table-actions">';
+    row += '<div class="skm-edit d-inline"><i class="fas fa-edit fa-lg"></i></div>';
+    row += '<div class="skm-delete d-inline"><i class="fas fa-trash-alt fa-lg"></i></div>';
+    row += '<div class="skm-confirm-edit d-none"><i class="fas fa-check-circle fa-lg"></i></div>';
+    row += '<div class="skm-cancel-edit d-none"><i class="fas fa-times-circle fa-lg"></i></div>';
+    row += '</td>';
 
-  //  $('#eventsSelect').val("");
-  $('#eventsSelect').prop("selectedIndex",0);
+    return row;
+  }
 
-  $('#eventsSelect').attr('disabled', false);
+  let radioRow = function (radio){
+    let row = '<tr data-radio="'+radio['id']+'">';
+    row += '<td class="radio-'+radio['id']+'">'+radio['radio']+'</td>';
+    row += '<td><i class="edit-radio fas fa-edit"></i>';
+    row += '<i class="delete-radio fas fa-trash-alt"></i></td>';
+    return row;
+  }
 
-  $('#selectDays input').attr('checked', false);
-  $('#horaInicio').val('13:00');
-  $('#horaFin').val('14:00');
-}
+  let showMessage = function(container, message, type){
+    if (type == undefined)
+      type = 'danger';
+
+    $(container+' .response').html(message);
+    $(container+' .response').addClass('alert-'+type);
+    $(container+' .response').removeClass('d-none');
+    setTimeout(function(){
+      $(container+' .response').removeClass('alert-'+type);
+      $(container+' .response').addClass('d-none');
+    }, 1000);
+  }
 
 
-$(function(){
+
+  let processResult = function(result, data, errorMsg, container, callback){
+    if (result){
+      let row = callback(data);
+
+      if ($('#emptyTable').length)
+        $(container+' table tbody').html(row);
+      else
+        $(container+' table tbody').append(row);
+    } else{
+      showMessage(container, errorMsg);
+    }
+  }
+
+  let cleanScheduleForm = function(){
+   //  $('#radioSelect').val("");
+    $('#radioSelect').prop("selectedIndex",0);
+
+    //  $('#eventsSelect').val("");
+    $('#eventsSelect').prop("selectedIndex",0);
+
+    $('#eventsSelect').attr('disabled', false);
+
+    $('#selectDays input').attr('checked', false);
+    $('#horaInicio').val('13:00');
+    $('#horaFin').val('14:00');
+  }
+
 
   //$.post(ajaxurl, data, function(data){});
 
@@ -88,10 +122,9 @@ $(function(){
       //reseteo el select y los checkbox
       $('#eventsForm input[type=checkbox]').prop('checked',false);
       $('#emptyOption').prop('selected', true);
+      $('#selectDays input').prop('checked', false);
 
-      processResult(response['result'], response['schedule'], response['msg'], '#skmSchedulerAdminArea', function(){
-        return response['schedule'];
-      });
+      processResult(response['result'], response, response['msg'], '#skmSchedulerAdminArea', scheduleRow);
     });
   });
 
@@ -173,6 +206,10 @@ $(function(){
 
         $row = $('tr.schedule-'+response['entity_uid']);
         $row.addClass('skm-table-row-success');
+        $row.empty();
+        $row.html( scheduleRowContent(response['data']['schedule'], response['data']['radios']) );
+
+        //console.log(response['entity']);
         setTimeout(function(){
           $row.removeClass('skm-table-row-success');
         }, 1000);
@@ -191,10 +228,10 @@ $(function(){
   });
 
   $('#skmSchedulerAdminArea').on('click', '#selectAll', function(){
-    if ( !$('#selectDays input').attr('checked') )
-      $('#selectDays input').attr('checked', true);
+    if ( $(this).prop('checked') )
+      $(this).siblings().prop('checked', true);
     else
-      $('#selectDays input').attr('checked', false);
+      $(this).siblings().prop('checked', false);
   });
 
 /*
@@ -296,4 +333,4 @@ $(function(){
 
 
   });
-});
+})(jQuery);

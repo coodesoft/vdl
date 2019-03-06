@@ -3,7 +3,7 @@
 #skirmisherScheduler li{
   display: inline-block;
   list-style-type: none;
-  padding: 5px 20px;
+  padding: 6px 2%;
   cursor:pointer;
   color: #ccc;
 }
@@ -19,6 +19,20 @@
   text-transform: uppercase;
   font-size: 14px;
   width: 100%;
+}
+
+#skmRadios ul{
+  background: none;
+}
+
+#skmRadios li{
+  color: #333;
+}
+
+#skmRadios li:hover,
+#skmRadios li.schedule-active{
+  background: none;
+  text-decoration: underline;
 }
 
 

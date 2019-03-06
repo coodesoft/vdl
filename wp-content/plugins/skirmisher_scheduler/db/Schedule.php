@@ -11,7 +11,7 @@ class Schedule{
       'wed' => 'wednesday',
       'thu' => 'thursday',
       'fri' => 'friday',
-      'sat' => 'saturady',
+      'sat' => 'saturday',
       'sun' => 'sunday',
     ];
   }
@@ -108,7 +108,11 @@ class Schedule{
     return $wpdb->get_results($query, ARRAY_A);
   }
 
-  static function getByRadioAndDay($radio, $day){
+  static function getByRadioAndDay($radio, $day = null){
+    //si no se proporciona la radio, por defecto se asigna el día domingo.
+    if (!$day)
+      $day = 'sun';
+
     global $wpdb;
     $tablename = $wpdb->prefix . self::TABLE;
     $postTable = $wpdb->prefix . 'posts';
@@ -120,6 +124,7 @@ class Schedule{
     $queryStr .= ' LEFT JOIN '.$radiosTable.' ON '.$tablename.'.radio_id='.$radiosTable.'.id';
     $queryStr .= ' LEFT JOIN '.$postTable.' ON '.$tablename.'.event_id='.$postTable.'.ID';
     $queryStr .= ' WHERE '.$radiosTable.'.id=%d AND '.$tablename.'.'.$cols[$day].'=1';
+    $queryStr .= ' ORDER BY '.$tablename.'.begin_time ASC';
 
     $query = $wpdb->prepare($queryStr, array($radio));
 

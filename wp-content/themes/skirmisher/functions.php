@@ -1,17 +1,15 @@
 <?php
 
 
-wp_register_script('jquery_js_skm', get_template_directory_uri() . '/js/jquery-3.2.1.min.js', [], false, true );
-wp_register_script('bootstrap_js_skm', get_template_directory_uri() . '/js/bootstrap.min.js', ['jquery_js_skm'], false, true );
-wp_register_script('popper_js_skm', get_template_directory_uri() . '/js/popper.min.js', [], false, true );
-wp_register_script('fontawesome-all_skm', get_template_directory_uri() . '/js/fontawesome-all.js', [], false, true );
+wp_register_script('bootstrap_js_skm', get_stylesheet_directory_uri() . '/js/bootstrap.min.js', ['jquery'], false, true );
+wp_register_script('popper_js_skm', get_stylesheet_directory_uri() . '/js/popper.min.js', ['bootstrap_js_skm'], false, true );
+wp_register_script('fontawesome-all_skm', get_stylesheet_directory_uri() . '/js/fontawesome-all.js', ['jquery'], false, true );
 
 add_action('wp_enqueue_scripts', 'add_theme_scripts_deps' );
 function add_theme_scripts_deps(){
-    wp_enqueue_script( 'jquery_js');
-    wp_enqueue_script( 'popper_js' );
-    wp_enqueue_script( 'bootstrap_js');
-    wp_enqueue_script( 'fontawesome-all' );
+    wp_enqueue_script( 'bootstrap_js_skm' );
+    wp_enqueue_script( 'popper_js_skm' );
+    wp_enqueue_script( 'fontawesome-all_skm' );
 }
 
 
