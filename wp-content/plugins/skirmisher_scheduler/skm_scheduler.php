@@ -22,37 +22,6 @@ if ( !function_exists( 'add_action' ) ) {
 
 define( 'SKIRMISHER_BASE_PATH' , plugin_dir_path( __FILE__ ) );
 
-/*
- * ACTIVACIÓN - Se añaden las depenencias ---------------------------
- */
-
-
- wp_register_script('bootstrap_js', plugins_url('/js/bootstrap.min.js', __FILE__), ['jquery'], false, true );
- wp_register_script('popper_js', plugins_url('/js/popper.min.js', __FILE__), [], false, true );
- wp_register_script('fontawesome-all', plugins_url('/js/fontawesome-all.js', __FILE__), ['jquery'], false, true );
-
- add_action('admin_enqueue_scripts', 'add_scripts_deps' );
- function add_scripts_deps(){
-     wp_enqueue_script( 'popper_js' );
-     wp_enqueue_script( 'bootstrap_js');
-     wp_enqueue_script( 'fontawesome-all' );
- }
-
-
-add_action('admin_enqueue_scripts', 'add_stylesheet_deps' );
-function add_stylesheet_deps($hook){
-	if($hook != 'toplevel_page_global_skirmisher_scheduler')
-  	return;
-	wp_enqueue_style( 'bootstrap_css',  plugins_url('/css/bootstrap.min.css', __FILE__) );
-}
-
-add_action('wp_head', 'skirmisher_ajaxurl');
-function skirmisher_ajaxurl() {
-    echo '<script type="text/javascript">
-           var ajaxurl = "' . admin_url('admin-ajax.php') . '";
-         </script>';
-}
-
 
 /*
  * ACTIVACIÓN - Se crea la tabla de programación de eventos y se añade el tipo de dato ---------------------------

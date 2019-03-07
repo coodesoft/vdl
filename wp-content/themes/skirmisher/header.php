@@ -51,7 +51,7 @@
 				<div class="site-branding">
 					<?php twentysixteen_the_custom_logo();
 
-					echo do_shortcode('[wpc-weather id="85"]');
+					echo do_shortcode('[skm_weather]');
  					?>
 				</div><!-- .site-branding -->
 
