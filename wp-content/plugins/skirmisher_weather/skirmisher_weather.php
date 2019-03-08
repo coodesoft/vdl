@@ -19,6 +19,9 @@ if ( !function_exists( 'add_action' ) ) {
 	exit;
 }
 
+wp_enqueue_style( 'skm_weather',  plugins_url('/css/skirmisher_weather.css', __FILE__));
+
+
 define( 'WEATHER_API_URI' , "http://api.openweathermap.org/data/2.5/weather?" );
 define( 'WEATHER_API_LANG', 'es' );
 define( 'WEATHER_API_UNITS', 'metric' );
@@ -41,9 +44,20 @@ function getWeatherInfo($city){
 function skirmisher_weather_html(){
   $info = getWeatherInfo('Tandil,AR');
   $data = $info['body'];
-  $data = json_decode($data);
+  $data = json_decode($data, true);
+
+	$temp = $data['main']['temp'];
+	$weather = $data['weather'][0]['description'];
 ?>
-  <div class="lala"><?php var_dump($data)?></div>
+	<div id="skm-weather" class="d-none d-lg-block">
+		<div>
+			<div class="skm_w_label">CLIMA</div>
+			<div class="skm_w_content"><?php echo ucfirst($weather)?></div>
+		</div>
+		<div>
+			<div class="skm_w_temp"><?php echo round($temp, 1) ?>°</div>
+		</div>
+	</div>
 <?php }
 
 

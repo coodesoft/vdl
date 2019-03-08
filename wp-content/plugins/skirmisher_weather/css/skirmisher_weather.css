@@ -1,0 +1,29 @@
+
+#skm-weather{
+  border-bottom: 2px solid orange;
+  width: 15%;
+}
+
+#skm-weather >div:first-child{
+  display: inline-block;
+  width: 67%;
+}
+
+#skm-weather >div:last-child{
+  text-align: right;
+  display: inline-block;
+  width: 27%;
+}
+
+.skm_w_label{
+  color: #2e739c;
+  font-weight: bold;
+}
+
+.skm_w_content{
+  font-size: 0.85vw;
+}
+
+.skm_w_temp{
+  font-size: 1vw;
+}

@@ -49,12 +49,10 @@
 				<?php endif; ?>
 
 				<div class="site-branding">
-					<?php twentysixteen_the_custom_logo();
-
-					echo do_shortcode('[skm_weather]');
- 					?>
+					<?php twentysixteen_the_custom_logo()?>
 				</div><!-- .site-branding -->
-
+				<?php echo do_shortcode('[skm_weather]');?>
+				<?php echo do_shortcode('[skm_date]'); ?>
 
 			</div><!-- .site-header-main -->
 
