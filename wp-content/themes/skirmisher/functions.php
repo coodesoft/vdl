@@ -1,6 +1,5 @@
 <?php
 
-
 wp_register_script('bootstrap_js_skm', get_stylesheet_directory_uri() . '/js/bootstrap.min.js', ['jquery'], false, true );
 wp_register_script('popper_js_skm', get_stylesheet_directory_uri() . '/js/popper.min.js', ['bootstrap_js_skm'], false, true );
 wp_register_script('fontawesome-all_skm', get_stylesheet_directory_uri() . '/js/fontawesome-all.js', ['jquery'], false, true );
@@ -46,6 +45,32 @@ function skirmisher_ajaxurl() {
            var ajaxurl = "' . admin_url('admin-ajax.php') . '";
          </script>';
 }
+
+
+function skm_sidebar_init(){
+  register_sidebar( array(
+    'name'          => 'Barra lateral SKM',
+    'id'            => 'skm-header-sidebar',
+    'description'   => __( 'Add widgets here to appear in your sidebar.', 'twentysixteen' ),
+    'before_widget' => '<section id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</section>',
+    'before_title'  => '<h2 class="widget-title">',
+    'after_title'   => '</h2>',
+  ) );
+
+  register_sidebar( array(
+    'name'          => 'Barra lateral SKM',
+    'id'            => 'skm-sidebar',
+    'description'   => __( 'Add widgets here to appear in your sidebar.', 'twentysixteen' ),
+    'before_widget' => '<section id="%1$s" class="widget %2$s">',
+    'after_widget'  => '</section>',
+    'before_title'  => '<h2 class="widget-title">',
+    'after_title'   => '</h2>',
+  ) );
+}
+
+add_action( 'widgets_init', 'skm_sidebar_init' );
+
 
 require_once("inc/util.php");
 require_once("inc/components.php");

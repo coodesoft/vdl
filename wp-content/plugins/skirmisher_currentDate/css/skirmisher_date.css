@@ -1,0 +1,13 @@
+#skm_date{
+  width: 48%;
+  border-bottom: 2px solid orange;
+  position: absolute;
+  bottom: 0;
+  right:0;
+  font-size: 1vw;
+}
+
+#skm_date span{
+  color: #2e739c;
+  font-weight: bold;
+}

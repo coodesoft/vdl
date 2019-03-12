@@ -49,7 +49,7 @@ function skirmisher_weather_html(){
 	$temp = $data['main']['temp'];
 	$weather = $data['weather'][0]['description'];
 ?>
-	<div id="skm-weather" class="d-none d-lg-block">
+	<div id="skm-weather" class="d-none d-lg-inline-block">
 		<div>
 			<div class="skm_w_label">CLIMA</div>
 			<div class="skm_w_content"><?php echo ucfirst($weather)?></div>

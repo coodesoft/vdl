@@ -51,8 +51,16 @@
 				<div class="site-branding">
 					<?php twentysixteen_the_custom_logo()?>
 				</div><!-- .site-branding -->
-				<?php echo do_shortcode('[skm_weather]');?>
-				<?php echo do_shortcode('[skm_date]'); ?>
+				<div id="skm-widgets" class="d-none d-lg-inline-block">
+					<div id="skm-components">
+					<?php echo do_shortcode('[skm_weather]');?>
+					<?php echo do_shortcode('[skm_date]'); ?>
+					</div>
+					<div id="wp-widgets">
+						<?php dynamic_sidebar( 'skm-header-sidebar' ); ?>
+					</div>
+
+				</div>
 
 			</div><!-- .site-header-main -->
 

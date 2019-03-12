@@ -22,7 +22,7 @@ if ( !function_exists( 'add_action' ) ) {
 wp_enqueue_style( 'skm_date',  plugins_url('/css/skirmisher_date.css', __FILE__));
 
 function skirmisher_currentDate_html(){ ?>
-	<div class="skm_date">
+	<div id="skm_date" class="d-none d-lg-inline-block">
 		<?php
 			setlocale(LC_ALL,"es_ES");
 			$day = strftime("%A");
@@ -30,7 +30,7 @@ function skirmisher_currentDate_html(){ ?>
 			$year = strftime("del %Y");
 			//echo strftime("%A %d de %B del %Y");
 			?>
-			<?php echo ucfirst($day)?> <span><?php echo $date ?></span> <?php echo $year?>
+			<span><?php echo $date ?></span> <?php echo $year?>
 	</div>
 <?php }
 
