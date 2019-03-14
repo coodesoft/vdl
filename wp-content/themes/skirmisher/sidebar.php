@@ -9,5 +9,5 @@
 ?>
 
 <aside id="secondary" class="skm-sidebar sidebar widget-area" role="complementary">
-	
+	<?php echo do_shortcode('[skm_radios]');?>
 </aside><!-- .sidebar .widget-area -->

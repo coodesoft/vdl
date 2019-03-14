@@ -1,0 +1,113 @@
+
+.skm-radio{
+  max-width: 345px;
+  height: 40px;
+  position: relative;
+}
+
+.skm-radio > div{
+  display: inline-block;
+  position: absolute;
+  top: 0;
+  height: 100%;
+}
+
+.skm-radio .skm-radio-mic{
+  width: 19%;
+  left: 0;
+  text-align: center;
+}
+
+.skm-radio .skm-radio-mic img{
+  height: 100%;
+  padding: 5%;
+}
+
+.skm-radio .skm-radio-text{
+  width: 62%;
+  left: 19%;
+  background: black;
+  color: whitesmoke;
+  text-align: center;
+}
+
+.skm-radio .skm-radio-text > div{
+    height: 50%;
+}
+
+.skm-radio .skm-radio-btn{
+  width: 19%;
+  right: 0;
+  background: black;
+}
+
+.skm-radio .skm-radio-circle{
+  border-radius: 100%;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  padding-top: 5px;
+  left: 0;
+  right: 0;
+  margin: 4px auto;
+}
+
+
+.skm-radio .skm-radio-btn .skm-radio-link{
+  border-left: solid 16px whitesmoke;
+  border-bottom: solid 10px transparent;
+  border-top: solid 10px transparent;
+  margin-left: 9px;
+}
+
+
+.skm-radio .skm-radio-text .skm-radio-desc{
+  font-size: 0.8vw;
+}
+
+.skm-radio .skm-radio-text .skm-radio-info:before{
+  content: "";
+  display: inline-block;
+  vertical-align: middle;
+  height: 100%;
+}
+
+.skm-radio .skm-radio-text .skm-radio-info >div{
+  display: inline-block;
+  vertical-align: middle;
+}
+
+
+#skm-radio-wrapper{
+  margin-top: 5px;
+}
+
+#skm-radio-cristal{
+  border-bottom: 2px solid #f68708;
+}
+
+#skm-radio-cristal .skm-radio-circle,
+#skm-radio-cristal .skm-radio-mic{
+  background: #f68708 ;
+}
+
+#skm-radio-cristal .skm-radio-text div span{
+  color: #f68708 ;
+}
+
+#skm-radio-cristal .skm-radio-text .skm-radio-title{
+  font-size: 0.9vw;
+}
+
+#skm-radio-lacompania .skm-radio-circle,
+#skm-radio-lacompania .skm-radio-mic{
+  background: #2e739c;
+}
+
+#skm-radio-lacompania .skm-radio-text div span{
+  color: #2e739c;
+}
+
+#skm-radio-lacompania .skm-radio-text .skm-radio-title{
+  font-size: 0.76vw;
+}
