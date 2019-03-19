@@ -229,3 +229,74 @@ body:before{
 #skirmisher-slider .carousel-indicators li.active{
 	background: #2e739c;
 }
+
+.site-footer .main-navigation{
+	display: block;
+}
+
+.site-footer{
+	background: #1a1a1a;
+	height: 145px;
+}
+
+.site-footer .footer-content{
+	width: 100%;
+	position: relative;
+}
+
+.site-footer .footer-content >div,
+.site-footer .footer-content >nav{
+	position: absolute;
+}
+
+.site-footer .main-navigation a{
+	color: #ddd;
+}
+
+.site-footer .main-navigation a:hover,
+.site-footer .main-navigation a:active{
+	color: #ddd;
+}
+
+.site-footer .main-navigation .current-menu-item a{
+	text-shadow: none;
+	color: #f68708!important;
+	font-weight: 400;
+}
+
+.site-footer .main-navigation{
+	left: 50%;
+	top: 10px;
+	-webkit-transform: translateX(-50%);
+	transform: translateX(-50%);
+}
+
+.site-footer .main-navigation li{
+	border-right: 1px solid #666;
+}
+
+.site-footer .main-navigation li:last-child{
+	border-right: none;
+}
+
+.site-footer .logo-footer img{
+	width: 240px;
+}
+
+.site-footer .social-footer{
+	right: 0;
+	top: 10px;
+}
+
+.site-footer .social-footer a{
+	color: #ddd;
+}
+
+.site-footer .footer-adds{
+	top: 67px;
+	width: 100%;
+	text-align: center;
+	color: #ddd;
+	font-size: 14px;
+	text-transform: uppercase;
+}

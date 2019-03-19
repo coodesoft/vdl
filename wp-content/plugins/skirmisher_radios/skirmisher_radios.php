@@ -36,7 +36,7 @@ function skirmisher_radios_html(){?>
 				</div>
 				<div class="skm-radio-btn">
 					<div class="skm-radio-circle">
-						<a  href="#">
+						<a target="_blank" href="#">
 							<div class="skm-radio-link"></div>
 						</a>
 					</div>
@@ -57,7 +57,7 @@ function skirmisher_radios_html(){?>
 				</div>
 				<div class="skm-radio-btn">
 					<div class="skm-radio-circle">
-						<a  href="#">
+						<a target="_blank" href="#">
 							<div class="skm-radio-link"></div>
 						</a>
 					</div>
