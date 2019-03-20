@@ -43,7 +43,7 @@ function getWeatherInfo($city){
 
 function skirmisher_weather_html(){
   $info = getWeatherInfo('Tandil,AR');
-	if ( !is_wp_error($info['body']) ){
+	if ( !is_wp_error($info) ){
 		$data = $info['body'];
 	  $data = json_decode($data, true);
 

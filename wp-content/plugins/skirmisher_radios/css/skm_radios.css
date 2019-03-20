@@ -3,6 +3,7 @@
   max-width: 345px;
   height: 40px;
   position: relative;
+  margin: auto;
 }
 
 .skm-radio > div{
@@ -111,3 +112,48 @@
 #skm-radio-lacompania .skm-radio-text .skm-radio-title{
   font-size: 0.76vw;
 }
+
+
+@media (max-width: 992px){
+
+  .skm-radio .skm-radio-text .skm-radio-desc{
+    font-size: 1.8vw;
+  }
+  #skm-radio-cristal .skm-radio-text .skm-radio-title{
+    font-size: 1.9vw;
+  }
+  #skm-radio-lacompania .skm-radio-text .skm-radio-title{
+    font-size: 1.76vw;
+  }
+}
+
+@media (max-width: 768px) {
+  .skm-radio .skm-radio-text .skm-radio-desc{
+    font-size: 1.8vw;
+  }
+  #skm-radio-cristal .skm-radio-text .skm-radio-title{
+    font-size: 2.3vw;
+  }
+  #skm-radio-lacompania .skm-radio-text .skm-radio-title{
+    font-size: 1.6vw;
+  }
+}
+
+
+@media (max-width: 576px) {
+  .skm-radio .skm-radio-text .skm-radio-desc{
+    font-size: 2.8vw;
+  }
+  #skm-radio-cristal .skm-radio-text .skm-radio-title{
+    font-size: 3vw;
+  }
+  #skm-radio-lacompania .skm-radio-text .skm-radio-title{
+    font-size: 2.5vw;
+  }
+}
+
+
+
+
+
+@media (min-width: 992px) { }

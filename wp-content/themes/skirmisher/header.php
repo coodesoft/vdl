@@ -85,7 +85,8 @@
 			<?php endif; // End header image check. ?>
 
 				<?php if ( has_nav_menu( 'skirmisher-nav' ) ) : ?>
-					<nav id="navSkirmisher" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
+					<?php $classes = ( is_page('contacto') || is_page('programacion') ) ?  'no-nav': '' ; ?>
+					<nav id="navSkirmisher" class="<?php echo $classes ?>" role="navigation" aria-label="<?php esc_attr_e( 'Social Links Menu', 'twentysixteen' ); ?>">
 						<?php
 						 	//chequea que no se muestre en las páginas de contacto y programación
 							if ( !is_page('contacto') && !is_page('programacion')) {

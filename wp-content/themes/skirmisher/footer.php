@@ -36,7 +36,7 @@
 							<i class="fab fa-facebook-square fa-2x"></i>
 						</a>
 					</div>
-					<div class="footer-adds">
+					<div class="footer-adds d-none d-lg-inline-block">
 						<div class="footer-adds-msg">publicite en voces del langueyu</div>
 					</div>
 

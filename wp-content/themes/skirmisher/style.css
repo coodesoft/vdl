@@ -40,11 +40,9 @@ body:before{
 	padding-left: 10px;
 	padding-right: 10px;
 	border-right: 1px solid #666 !important;
+	font-size: 14px;
 }
 
-#menu-menu-principal li:last-child{
-	//border-right: 0px solid transparent !important;
-}
 
 #menu-menu-principal li:first-child{
 	border-left: 1px solid #666 !important;
@@ -122,6 +120,10 @@ body:before{
 
 #navSkirmisher{
   border-bottom: 2px solid orange;
+}
+
+#navSkirmisher.no-nav{
+	padding-bottom: 30px;
 }
 
 #site-header-menu{
@@ -230,6 +232,14 @@ body:before{
 	background: #2e739c;
 }
 
+section.not-found header{
+	border-top: none;
+}
+
+section.not-found {
+	margin-top: 10px;
+}
+
 .site-footer .main-navigation{
 	display: block;
 }
@@ -265,7 +275,7 @@ body:before{
 }
 
 .site-footer .main-navigation{
-	left: 50%;
+	left: 51%;
 	top: 10px;
 	-webkit-transform: translateX(-50%);
 	transform: translateX(-50%);
@@ -273,6 +283,8 @@ body:before{
 
 .site-footer .main-navigation li{
 	border-right: 1px solid #666;
+	text-transform: uppercase;
+	font-size: 14px;
 }
 
 .site-footer .main-navigation li:last-child{
@@ -299,4 +311,63 @@ body:before{
 	color: #ddd;
 	font-size: 14px;
 	text-transform: uppercase;
+}
+
+.contact-page{
+	width: 100%;
+	margin-right: 0;
+	text-align: center;
+	padding-top: 20px;
+}
+
+.contact-page label{
+	text-align: left;
+}
+
+.contact-page label span.label{
+	font-weight: 700;
+	font-size: 13px;
+}
+
+.contact-page label span.req{
+	font-style: italic;
+	font-weight: 400;
+	font-size: 13px;
+}
+
+.contact-page input.wpcf7-submit{
+	background: #212529;
+}
+
+.contact-page input.wpcf7-submit:hover{
+	background: #f68708;
+}
+
+.contact-page .wpcf7-validation-errors,
+.contact-page .wpcf7-mail-sent-ng,
+.contact-form .wpcf7-spam-blocked,
+.contact-form .wpcf7-aborted{
+	color: #721c24;
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+		padding: 10px;
+}
+
+.contact-form .wpcf7-mail-sent-ok{
+	color: #155724;
+  background-color: #d4edda;
+  border-color: #c3e6cb;
+}
+
+.contact-form .wpcf7-acceptance-missing{
+	color: #856404;
+	background-color: #fff3cd;
+	border-color: #ffeeba;
+}
+
+@media (max-width: 992px){
+	.site-footer .main-navigation li{
+		border-right: none;
+		border-left: none;
+	}
 }

@@ -11,9 +11,11 @@
  * @since Twenty Sixteen 1.0
  */
 
-get_header(); ?>
+get_header();
+$classes = is_page('contacto') ? 'contact-page' : '';
+?>
 
-<div id="primary" class="content-area">
+<div id="primary" class="content-area <?php echo $classes ?>">
 	<main id="main" class="site-main" role="main">
 
 		<?php
@@ -54,5 +56,8 @@ get_header(); ?>
 
 </div><!-- .content-area -->
 
-<?php get_sidebar(); ?>
+<?php
+	if ( !is_page('contacto') )
+		get_sidebar();
+?>
 <?php get_footer(); ?>
