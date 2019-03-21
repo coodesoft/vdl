@@ -26,15 +26,18 @@ get_header(); ?>
 				<header>
 					<h1 class="page-title screen-reader-text"><?php single_post_title(); ?></h1>
 				</header>
-			<?php endif; ?>
+			<?php endif;
 
-			<div class="row">
-			<?php
-			// Start the loop.
-			while ( have_posts() ) : the_post();
-				 get_template_part( 'template-parts/post', 'preview' );
-			endwhile;
+			$sliderCat = get_category_by_slug('slider');
+			$args = ['post_type' => 'post', 'cat' => -$sliderCat->term_id];
+			$query = new WP_Query( $args );
 			?>
+			<div class="row">
+				<?php
+				while ( $query->have_posts() ) : $query->the_post();
+					get_template_part( 'template-parts/post', 'preview' );
+				endwhile;
+				?>
 			</div>
 			<?php
 			// Previous/next page navigation.

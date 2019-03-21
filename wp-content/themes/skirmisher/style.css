@@ -208,6 +208,10 @@ body:before{
 
 }
 
+.skirmisher-card .skirmisher-nav-links.no-categories{
+	margin-bottom: 45px;
+}
+
 
 #skirmisher-slider{
 	margin-top: 30px;
@@ -292,7 +296,7 @@ section.not-found {
 }
 
 .site-footer .logo-footer img{
-	width: 240px;
+	width: 200px;
 }
 
 .site-footer .social-footer{

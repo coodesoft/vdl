@@ -23,7 +23,8 @@ $classes = is_page('contacto') ? 'contact-page' : '';
 		if (is_page('inicio')){
 			skirmisher_post_slider();
 
-			$args = ['post_type' => 'post'];
+			$sliderCat = get_category_by_slug('slider');
+			$args = ['post_type' => 'post', 'cat' => -$sliderCat->term_id];
 			$query = new WP_Query( $args );
 			?>
 			<div class="row">

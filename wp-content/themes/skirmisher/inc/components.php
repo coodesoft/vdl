@@ -2,18 +2,23 @@
 
 
 function the_skirmisher_post_categories($post_id = null, $rootCat = true){ ?>
-	<ul class="skirmisher-nav-links">
+	<?php $categories = get_the_category($post_id);
+		$noSubcategories = true;
+		foreach ($categories as $key => $category) {
+			if ($category->parent != 0)
+				$noSubcategories = false;
+		}
+	?>
+
+
+	<ul class="skirmisher-nav-links <?php echo $noSubcategories ? 'no-categories' : ''?>">
     <?php
-      $categories = get_the_category($post_id);
       foreach ($categories as $key => $cat) {
-		if ($rootCat || $cat->parent != 0) {
-			$category_link = get_category_link( $cat->term_id );
-      ?>
-		  <li>
-			<a href="<?php echo esc_url( $category_link ); ?>" title="Category Name"><?php echo $cat->name ?></a>
-		  </li>
-		<?php }
-	  } ?>
+				if ($rootCat || $cat->parent != 0) {
+					$category_link = get_category_link( $cat->term_id ); ?>
+				  <li><a href="<?php echo esc_url( $category_link ); ?>" title="Category Name"><?php echo $cat->name ?></a></li>
+				<?php }
+	  	} ?>
     </ul>
 <?php
 }
