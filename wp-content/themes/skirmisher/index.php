@@ -32,7 +32,9 @@ get_header(); ?>
 			$args = ['post_type' => 'post', 'cat' => -$sliderCat->term_id];
 			$query = new WP_Query( $args );
 			?>
-			<div class="row">
+			<div class="grid">
+				<div class="grid-sizer col-md-6"></div>
+
 				<?php
 				while ( $query->have_posts() ) : $query->the_post();
 					get_template_part( 'template-parts/post', 'preview' );

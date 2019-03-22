@@ -8,9 +8,15 @@
  */
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class('skm-post'); ?>>
 	<header class="entry-header">
-		<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
+
+		<?php
+		$day = get_the_date('j');
+		$month = get_the_date('F');
+		$year = get_the_date('Y');
+		echo '<div class="entry-date">'.$day.' de '.$month.' de '.$year.'</div>';
+		the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 	</header><!-- .entry-header -->
 
 	<?php twentysixteen_excerpt(); ?>

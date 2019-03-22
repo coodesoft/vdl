@@ -26,12 +26,12 @@ $attachment_audio_url =  $value->guid;
 }
 ?>
 
-<div class="col-md-6">
+<div class="grid-item col-md-6">
   <div class="card skirmisher-card">
     <article id="post-<?php echo $post_id ?>">
-    
+
 	<?php the_skirmisher_post_categories($post_id, false) ?>
-	
+
     <a class="post-link" href="<?php echo esc_url(get_post_permalink($post_id))?>">
     <div class="attachment-image">
       <?php $ruta_imagen = skirmisher_attachment_img($post_id) ?>

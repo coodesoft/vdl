@@ -3,6 +3,8 @@
 wp_register_script('bootstrap_js_skm', get_stylesheet_directory_uri() . '/js/bootstrap.min.js', ['jquery'], false, true );
 wp_register_script('popper_js_skm', get_stylesheet_directory_uri() . '/js/popper.min.js', ['bootstrap_js_skm'], false, true );
 wp_register_script('fontawesome-all_skm', get_stylesheet_directory_uri() . '/js/fontawesome-all.js', ['jquery'], false, true );
+wp_register_script('isotope_js_skm', get_stylesheet_directory_uri() . '/js/isotope.min.js', ['jquery'], false, true );
+wp_register_script('skirmisher_js', get_stylesheet_directory_uri() . '/js/skirmisher_theme.js', ['isotope_js_skm'], false, true );
 
 add_action('wp_enqueue_scripts', 'add_theme_scripts_deps' );
 add_action('admin_enqueue_scripts', 'add_theme_scripts_deps' );
@@ -10,6 +12,8 @@ function add_theme_scripts_deps(){
     wp_enqueue_script( 'bootstrap_js_skm' );
     wp_enqueue_script( 'popper_js_skm' );
     wp_enqueue_script( 'fontawesome-all_skm' );
+    wp_enqueue_script( 'isotope_js_skm' );
+    wp_enqueue_script( 'skirmisher_js' );
 }
 
 

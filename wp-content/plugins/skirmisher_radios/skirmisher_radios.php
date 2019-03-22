@@ -22,6 +22,28 @@ wp_enqueue_style( 'skm_radios',  plugins_url('/css/skm_radios.css', __FILE__) );
 function skirmisher_radios_html(){?>
 	<div id="skm-radio-wrapper">
 
+		<div id="skm-radio-lacompania" class="skm-radio">
+				<div class="skm-radio-mic">
+					<img src="<?php echo plugins_url('/img/mic.png', __FILE__) ?>" alt="mic image">
+				</div>
+				<div class="skm-radio-text">
+					<div class="skm-radio-title skm-radio-info">
+						<div>RADIO LA COMPAÑÍA <span>EN VIVO</span></div>
+					</div>
+					<div class="skm-radio-desc skm-radio-info">
+						<div>PANORAMA INFORMÁTIVO</div>
+					</div>
+				</div>
+				<div class="skm-radio-btn">
+					<div class="skm-radio-circle">
+						<a target="_blank" href="#">
+							<div class="skm-radio-link"></div>
+						</a>
+					</div>
+				</div>
+		</div>
+
+
 		<div id="skm-radio-cristal" class="skm-radio">
 				<div class="skm-radio-mic">
 					<img src="<?php echo plugins_url('/img/mic.png', __FILE__) ?>" alt="mic image">
@@ -43,26 +65,6 @@ function skirmisher_radios_html(){?>
 				</div>
 		</div>
 
-		<div id="skm-radio-lacompania" class="skm-radio">
-				<div class="skm-radio-mic">
-					<img src="<?php echo plugins_url('/img/mic.png', __FILE__) ?>" alt="mic image">
-				</div>
-				<div class="skm-radio-text">
-					<div class="skm-radio-title skm-radio-info">
-						<div>RADIO LA COMPAÑÍA <span>EN VIVO</span></div>
-					</div>
-					<div class="skm-radio-desc skm-radio-info">
-						<div>PANORAMA INFORMÁTIVO</div>
-					</div>
-				</div>
-				<div class="skm-radio-btn">
-					<div class="skm-radio-circle">
-						<a target="_blank" href="#">
-							<div class="skm-radio-link"></div>
-						</a>
-					</div>
-				</div>
-		</div>
 
 	</div>
 <?php }

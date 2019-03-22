@@ -13,8 +13,22 @@ This theme, like WordPress, is licensed under the GPL.
 Use it to make something cool, have fun, and share what you've learned with others.
 */
 
+body,
+div,
+span,
+a{
+	font-family: 'Muli', sans-serif!important;
+}
+
+h1,
+h2,
+h3,p{
+	font-family: 'Open Sans', sans-serif!important;
+}
+
 #page, body{
 	margin-top: 0 !important;
+	background-color: whitesmoke!important;
 }
 
 body:before{
@@ -99,6 +113,10 @@ body:before{
 
 #wp-widgets section input{
 	width: 100%;
+}
+
+#wp-widgets section form{
+	background-color: white;
 }
 
 #wp-widgets section input,
@@ -192,9 +210,6 @@ body:before{
   margin-bottom: 20px;
 }
 
-.skirmisher-card .card-body.no-audio-attached{
-  padding-bottom: 42px;
-}
 
 .skirmisher-audio{
   width: 100%;
@@ -214,8 +229,9 @@ body:before{
 
 
 #skirmisher-slider{
-	margin-top: 30px;
-	margin-bottom:50px;
+	margin-top: 15px;
+	margin-bottom:40px;
+	padding: 15px 5px;
 }
 
 #skirmisher-slider .carousel-indicators{
@@ -347,11 +363,21 @@ section.not-found {
 	background: #f68708;
 }
 
+.contact-page form{
+	background-color: #eee;
+	width: 75%;
+	margin: auto;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	border-radius: 10px;
+	border: 1px solid #ddd;
+}
+
 .contact-page .wpcf7-validation-errors,
 .contact-page .wpcf7-mail-sent-ng,
 .contact-form .wpcf7-spam-blocked,
 .contact-form .wpcf7-aborted{
-	color: #721c24;
+		color: #721c24;
     background-color: #f8d7da;
     border-color: #f5c6cb;
 		padding: 10px;
@@ -369,9 +395,43 @@ section.not-found {
 	border-color: #ffeeba;
 }
 
+.skm-post{
+	margin-top: 20px;
+}
+
+.skm-post .entry-summary p{
+	font-size: 16px;
+}
+.skm-post .entry-content p{
+	font-size: 18px;
+}
+
+.skm-post .entry-content{
+	width: 100%!important;
+	float: none!important;
+}
+
+.skm-post .entry-title{
+	color: #2e739c;
+}
+
+
+
 @media (max-width: 992px){
 	.site-footer .main-navigation li{
 		border-right: none;
 		border-left: none;
+	}
+}
+
+@media (max-width: 909px){
+	#content.site-content{
+		 padding: 0 7.6923%
+	}
+	.contact-page form{
+		width: 100%;
+	}
+	.contact-page .entry-content{
+		margin: auto!important;
 	}
 }

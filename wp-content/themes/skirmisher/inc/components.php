@@ -55,14 +55,16 @@ function skirmisher_post_slider(){
 				<?php $ruta_imagen = skirmisher_attachment_img($post->ID) ?>
 				<div class="row">
 					<div class="col-md-6">
-						<img class="w-100" src="<?php echo esc_url($ruta_imagen) ?>" alt="<?php echo $post->post_title ?>">
+						<a class="post-link"href="<?php echo esc_url(get_post_permalink($post_id))?>">
+							<img class="w-100" src="<?php echo esc_url($ruta_imagen) ?>" alt="<?php echo $post->post_title ?>">
+						</a>
 					</div>
 					<div class="col-md-6">
 						<div class="skirmisher-slider-content w-100">
 							<?php the_skirmisher_post_categories($post_id, false) ?>
 							<a class="post-link"href="<?php echo esc_url(get_post_permalink($post_id))?>">
 							<h3><?php echo $post->post_title ?></h3>
-							<p><?php echo $post->post_excerpt ?></p>
+							<p><?php echo format_excerpt( $post->post_excerpt, 200 ) ?></p>
 							</a>
 						</div>
 					</div>
@@ -71,9 +73,14 @@ function skirmisher_post_slider(){
 		<?php endforeach; ?>
 	  </div>
 	  <ol class="carousel-indicators">
-		<li data-target="#skirmisher-slider" data-slide-to="0" class="active"></li>
-		<li data-target="#skirmisher-slider" data-slide-to="1"></li>
-		<li data-target="#skirmisher-slider" data-slide-to="2"></li>
+			<?php foreach ($sliderPosts as $key => $post) : ?>
+				<?php if ($key == 0){ ?>
+				<li data-target="#skirmisher-slider" data-slide-to="<?php echo $key ?>" class="active"></li>
+			<?php } else { ?>
+				<li data-target="#skirmisher-slider" data-slide-to="<?php echo $key ?>"></li>
+			<?php } ?>
+			<?php endforeach; ?>
+
 	  </ol>
 	</div>
 

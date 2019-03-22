@@ -19,22 +19,6 @@ $classes = is_page('contacto') ? 'contact-page' : '';
 	<main id="main" class="site-main" role="main">
 
 		<?php
-
-		if (is_page('inicio')){
-			skirmisher_post_slider();
-
-			$sliderCat = get_category_by_slug('slider');
-			$args = ['post_type' => 'post', 'cat' => -$sliderCat->term_id];
-			$query = new WP_Query( $args );
-			?>
-			<div class="row">
-				<?php
-				while ( $query->have_posts() ) : $query->the_post();
-					get_template_part( 'template-parts/post', 'preview' );
-				endwhile;
-				?>
-			</div>
-		<?php } else{
 			// Start the loop.
 			while ( have_posts() ) : the_post();
 
@@ -48,7 +32,6 @@ $classes = is_page('contacto') ? 'contact-page' : '';
 
 				// End of the loop.
 			endwhile;
-		}
 		?>
 
 	</main><!-- .site-main -->
