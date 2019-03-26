@@ -48,7 +48,7 @@ function skirmisher_public_html(){
       <?php foreach ($schedule as $key => $data): ?>
         <div class="schedule-container col-12">
           <div class="schedule-header d-inline-block">
-            <div class="schedule-head d-inline-block"><?php echo $data['timetable']?></div>
+            <div class="schedule-head d-inline-block"><?php echo $data['begin_time'].' - '.$data['end_time']?></div>
             <div class="schedule-head d-inline-block"><?php echo strtoupper($data['post_title'])?></div>
           </div>
           <div class="schedule-body">
