@@ -5,7 +5,7 @@
  */
 add_action('admin_menu', 'skm_schedule_admin_menu');
 function skm_schedule_admin_menu(){
-	add_menu_page('Skirmisher Scheduler', 'Skirmisher Scheduler', 'manage_options', 'global_skirmisher_scheduler', 'global_skirmisher_admin');
+	add_menu_page('Skirmisher Scheduler', 'Skirmisher Scheduler', 'edit_published_posts', 'global_skirmisher_scheduler', 'global_skirmisher_admin');
 }
 
 wp_register_script('skm_scheduler_admin', plugins_url('/js/skm_scheduler.js', __FILE__), ['jquery'], false, true );
@@ -25,8 +25,8 @@ function add_stylesheet_admin($hook){
  * Inclusión de las áreas administrativas
  */
 
-require_once 'skm_scheduler_tab.php';
 require_once 'skm_radios_tab.php';
+require_once 'skm_scheduler_tab.php';
 
 
 function global_skirmisher_admin(){
@@ -52,11 +52,11 @@ function global_skirmisher_admin(){
 		<?php } ?>
 
 		<?php if ($activeTab == 'radios'){ ?>
-			<div><?php	skm_radios_tab(); ?></div>
+			<div><?php skm_radios_tab(); ?></div>
 		<?php } ?>
 
 		<?php if ($activeTab == 'scheduler'){ ?>
-			<div><?php	skm_scheduler_tab(); ?></div>
+			<div><?php skm_scheduler_tab(); ?></div>
 		<?php } ?>
 
 	</div>

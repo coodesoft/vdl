@@ -10,4 +10,5 @@
 
 <aside id="secondary" class="skm-sidebar sidebar widget-area" role="complementary">
 	<?php echo do_shortcode('[skm_radios]');?>
+	<?php echo do_shortcode('[recent_facebook_posts]');?>
 </aside><!-- .sidebar .widget-area -->

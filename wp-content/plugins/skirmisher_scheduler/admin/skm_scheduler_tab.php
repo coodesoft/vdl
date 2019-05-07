@@ -69,7 +69,7 @@ function skm_schedule_table(){ ?>
       </tbody>
     </table>
   </form>
-<? }
+<?php }
 
 function skm_scheduler_tab(){
   $args = array( 'post_type' => 'events' );

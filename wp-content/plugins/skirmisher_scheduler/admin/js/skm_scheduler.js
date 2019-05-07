@@ -53,8 +53,8 @@
   }
 
   let radioRow = function (radio){
-    let row = '<tr data-radio="'+radio['id']+'">';
-    row += '<td class="radio-'+radio['id']+'">'+radio['radio']+'</td>';
+    let row = '<tr class="radio-'+radio['id']+'" data-radio="'+radio['id']+'">';
+    row += '<td>'+radio['radio']+'</td>';
     row += '<td><i class="edit-radio fas fa-edit"></i>';
     row += '<i class="delete-radio fas fa-trash-alt"></i></td>';
     return row;

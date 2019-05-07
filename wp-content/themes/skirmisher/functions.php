@@ -51,6 +51,7 @@ function skirmisher_ajaxurl() {
 }
 
 
+add_action( 'widgets_init', 'skm_sidebar_init' );
 function skm_sidebar_init(){
   register_sidebar( array(
     'name'          => 'Barra lateral SKM',
@@ -73,7 +74,18 @@ function skm_sidebar_init(){
   ) );
 }
 
-add_action( 'widgets_init', 'skm_sidebar_init' );
+add_action( 'admin_menu', 'skm_no_admin_menu' );
+function skm_no_admin_menu(){
+
+  if( is_user_logged_in() ) {
+     $user = wp_get_current_user();
+     $roles = ( array ) $user->roles;
+     if ($roles[0] == 'administrator')
+      remove_menu_page( 'edit.php?post_type=page' );
+      remove_menu_page( 'tools.php' );
+      remove_menu_page( 'admin.php?page=sharing' );
+  }
+}
 
 
 require_once("inc/util.php");
